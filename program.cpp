@@ -209,6 +209,7 @@ int main() {
                             cin >> R;
                             if (R[0]=='n' || R[0]=='N') {
                                 cout << "Ok, vamos cancelar as tentativas." << endl;
+                                break;
                             }
                             cout << endl;
                         }
@@ -253,6 +254,10 @@ int main() {
                             } else 
                                 cout << "Vamos para a " << i+1 << "a tentativa do senhor? ";
                             cin >> R;
+                            if (R[0]=='n' || R[0]=='N') {
+                                cout << "Ok, vamos cancelar as tentativas." << endl;
+                                break;
+                            }
                             cout << endl;
                         }
                     }                                               //terminação do quarto "for"
@@ -296,6 +301,10 @@ int main() {
                             } else 
                                 cout << "Vamos para a " << i+1 << "a tentativa do senhor? ";
                             cin >> R;
+                            if (R[0]=='n' || R[0]=='N') {
+                                cout << "Ok, vamos cancelar as tentativas." << endl;
+                                break;
+                            }
                             cout << endl;
                         }
                     }                                               //terminação do quinto "for"
@@ -337,3 +346,6 @@ int main() {
     
     return 0;
 }        //int main() fecha-chave
+
+
+//COLOCAR SISTEMA DE QUE SE A APOSTA FOR MAIOR QUE O DINHEIRO, NÃO PERMITIR QUE O JOGADOR CONTINUE COM A AÇÃO 
