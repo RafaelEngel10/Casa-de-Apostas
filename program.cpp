@@ -157,7 +157,7 @@ int main() {
                         if (Condicionador==false) {                                       //se nem um for igual
                             cout << "Que ma sorte! Parece que voce nao conseguiu nem um simbolo igual se quer. Na proxima com certeza voce consegue!" << endl;
                         }
-                        if (i==1 || i==0) {                                                     //pergunta para não começar instantaneamente a segunda tentativa
+                        if (i==0) {                                                     //pergunta para não começar instantaneamente a segunda tentativa
                             cout << "Vamos para a segunda tentativa do senhor?";
                             cin >> R;
                             cout << endl;
@@ -237,7 +237,7 @@ int main() {
                         if (Condicionador==false) {                                       //se nem um for igual
                             cout << "Que ma sorte! Parece que voce nao conseguiu nem um simbolo igual se quer. Na proxima com certeza voce consegue!" << endl;
                         }
-                        if (i==1 || i==0) {                                                     //pergunta para não começar instantaneamente a segunda/terceira/quarta tentativa
+                        if (i==2 || i==1 || i==0) {                                                     //pergunta para não começar instantaneamente a segunda/terceira/quarta tentativa
                             if (i==0) {
                                 cout << "Vamos para a " << i+2 << "a tentativa do senhor?";
                             } else {
@@ -279,7 +279,7 @@ int main() {
                         if (Condicionador==false) {                                       //se nem um for igual
                             cout << "Que ma sorte! Parece que voce nao conseguiu nem um simbolo igual se quer. Na proxima com certeza voce consegue!" << endl;
                         }
-                        if (i==1 || i==0) {                                                     //pergunta para não começar instantaneamente a próxima tentativa
+                        if (i==3 || i==2 ||i==1 || i==0) {                                                     //pergunta para não começar instantaneamente a próxima tentativa
                             if (i==0) {
                                 cout << "Vamos para a " << i+2 << "a tentativa do senhor?";
                             } else {
