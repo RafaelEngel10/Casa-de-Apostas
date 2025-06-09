@@ -7,7 +7,7 @@ using namespace std;
 
 int main() {
     int OP,i,j,NumerosSorteados[6],NumerosEscolhidos[6],Contador; //variável de opção e opção 2, variável para função (for), vetor tipo Int para armazenar números
-    char Nome[30], s[3], R; //vetor tipo Char para colocar seu nome, variável para armazenar resposta
+    char Nome[30], s[3], R[3]; //vetor tipo Char para colocar seu nome, variável para armazenar resposta
     float Dinheiro, apostaValor; //variável que representa o dinheiro inicial do jogador
     bool Condicionador = false;   //pra aplicar uma condição de verdade ou falso  
     OP=0; Dinheiro=100; Contador=0;
@@ -39,6 +39,7 @@ int main() {
        switch (OP) {
 
         case 1:
+            Condicionador = false;
             Dinheiro -= 20;
             cout << "-20 reais." << endl;
             cout << "Boa noite " << Nome << "! Vou gerar 6 numeros diferentes e se voce tem que acertar pelo menos um deles." << endl;
@@ -46,7 +47,7 @@ int main() {
             for (i=0;i<6;i++) {
                 NumerosSorteados[i] = rand()%60+1;
             }
-            cout << "Geracao aleatoria feita! Agora escreva os numeros: " << endl;
+            cout << "Geracao aleatoria feita! Agora escreva os numeros. " << endl;
             for (i=0;i<6;i++) {
                 cout << "Escreva o " << i+1 << "o numero: ";
                 cin >> NumerosEscolhidos[i];
@@ -88,7 +89,7 @@ int main() {
                 cout << "21 a 50 reais = 3 jogadas." << endl;
                 cout << "51 a 100 reais = 4 jogadas." << endl;
                 cout << "100+ reais = 5 jogadas." << endl;
-                cout << "Digite 0 para desistir (sem retorno de dinheiro)." << endl;
+                cout << "Digite 0 para desistir (sem retorno do valor de entrada)." << endl;
                 cout << "=====================================" << endl;
                 cout << "Qual vai ser o valor da sua aposta? ";
                 cin >> apostaValor; 
@@ -96,6 +97,7 @@ int main() {
                     srand(static_cast<unsigned>(time(0)));
                     Dinheiro -= apostaValor;
                     cout << "Certo, voce apostou " << apostaValor << " reais, agora voce vai poder puxar a alavanca e esperar o resultado. Vou puxa-la por ti." << endl;
+                    cout << endl;
                     for (i=0;i<1;i++) {
                         cout << "Simbolos sorteados: ";
                         for (j=0;j<3;j++) {
@@ -155,7 +157,7 @@ int main() {
                         if (Condicionador==false) {                                       //se nem um for igual
                             cout << "Que ma sorte! Parece que voce nao conseguiu nem um simbolo igual se quer. Na proxima com certeza voce consegue!" << endl;
                         }
-                        if (i==1) {                                                     //pergunta para não começar instantaneamente a segunda tentativa
+                        if (i==1 || i==0) {                                                     //pergunta para não começar instantaneamente a segunda tentativa
                             cout << "Vamos para a segunda tentativa do senhor?";
                             cin >> R;
                             cout << endl;
@@ -193,8 +195,12 @@ int main() {
                         if (Condicionador==false) {                                       //se nem um for igual
                             cout << "Que ma sorte! Parece que voce nao conseguiu nem um simbolo igual se quer. Na proxima com certeza voce consegue!" << endl;
                         }
-                        if (i==1) {                                                     //pergunta para não começar instantaneamente a segunda/terceira tentativa
-                            cout << "Vamos para a " << i+1 <<"a tentativa do senhor?";
+                        if (i==1 || i==0) {                                                     //pergunta para não começar instantaneamente a segunda/terceira tentativa
+                            if (i==0) {
+                                cout << "Vamos para a " << i+2 << "a tentativa do senhor?";
+                            } else {
+                                cout << "Vamos para a " << i+1 <<"a tentativa do senhor?";
+                            }
                             cin >> R;
                             cout << endl;
                         }
@@ -231,8 +237,12 @@ int main() {
                         if (Condicionador==false) {                                       //se nem um for igual
                             cout << "Que ma sorte! Parece que voce nao conseguiu nem um simbolo igual se quer. Na proxima com certeza voce consegue!" << endl;
                         }
-                        if (i==1) {                                                     //pergunta para não começar instantaneamente a segunda/terceira/quarta tentativa
-                            cout << "Vamos para a " << i+1 <<"a tentativa do senhor?";
+                        if (i==1 || i==0) {                                                     //pergunta para não começar instantaneamente a segunda/terceira/quarta tentativa
+                            if (i==0) {
+                                cout << "Vamos para a " << i+2 << "a tentativa do senhor?";
+                            } else {
+                                cout << "Vamos para a " << i+1 <<"a tentativa do senhor?";
+                            }
                             cin >> R;
                             cout << endl;
                         }
@@ -269,8 +279,12 @@ int main() {
                         if (Condicionador==false) {                                       //se nem um for igual
                             cout << "Que ma sorte! Parece que voce nao conseguiu nem um simbolo igual se quer. Na proxima com certeza voce consegue!" << endl;
                         }
-                        if (i==1) {                                                     //pergunta para não começar instantaneamente a próxima tentativa
-                            cout << "Vamos para a " << i+1 <<"a tentativa do senhor?";
+                        if (i==1 || i==0) {                                                     //pergunta para não começar instantaneamente a próxima tentativa
+                            if (i==0) {
+                                cout << "Vamos para a " << i+2 << "a tentativa do senhor?";
+                            } else {
+                                cout << "Vamos para a " << i+1 <<"a tentativa do senhor?";
+                            }
                             cin >> R;
                             cout << endl;
                         }
@@ -278,13 +292,16 @@ int main() {
                 }                                                //terminação da quinta condição de valor da aposta
 
                 if (apostaValor==0) {                     //condição de desistência
-                cout << "Voce escolheu desistir do jogo. Voltando ao menu principal." << endl;
-                Contador +=1;
-                break;
+                    cout << "Voce escolheu desistir do jogo. Voltando ao menu principal." << endl;
+                    Contador +=1;
+                    break;
                 }
 
             } while (apostaValor!=0);                         //condição da função "do"
         break;                       //final case 2
+
+        case 3: 
+            
 
         case 7: 
             Dinheiro -= 50;
