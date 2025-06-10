@@ -6,14 +6,14 @@
 using namespace std;
 
 int main() {
-    int OP,i,j,NumerosSorteados[6],NumerosEscolhidos[6],Contador,girarTambor, VidaUsuario=3, VidaBot=3; 
-    //variável de opção e opção 2, variável para função (for), vetor tipo Int para armazenar números
+    int OP,i,j,NumerosSorteados[6],NumerosEscolhidos[6],Contador,girarTambor, VidaUsuario=3, VidaBot=3, escolhaBot; 
+    //variável de opção e opção 2, variável para função (for), vetor tipo Int para armazenar números, vida do usuário e do robô, variável de escolha do robô
     char Nome[30], s[3], R[3], atirarArmar; //vetor tipo Char para colocar seu nome, vetor para armazenar símbolos, vetor para armazenar resposta,
     float Dinheiro, apostaValor; //variável que representa o dinheiro inicial do jogador
     bool Condicionador = false;   //pra aplicar uma condição de verdade ou falso  
     OP=0; Dinheiro=100; Contador=0;
     vector<char> Simbolos = {'@','#','$','&','*','%','/','?','!'};                //vetor tipo char para armazenar símbolos (slot machine)
-    vector<int> revolver(6, 0);                                            //vetor tipo int para armazenar 0 ou 1
+    bool revolver[6] = {false, false, false, false, false, false};                                          //vetor tipo bool armazenando false em todas as posições
 
     cout << "Antes de jogar, por favor digite seu nome: ";
     cin >> Nome;
@@ -330,7 +330,6 @@ int main() {
             
 
         case 7: 
-            srand(time(NULL));
             Dinheiro -= 50;
             cout << "-50 reais." << endl;
             cout << "Bem vindo a Roleta Russa! Nesse jogo, o programa ira gerar um numero aleatorio de 1 a 6 e voce tem que escolher entre atirar em si mesmo ou engatilhar a arma e atirar" << endl;
@@ -339,45 +338,60 @@ int main() {
             cout << endl << "Voce escolhe puxar o gatilho ou engatilhar a arma (A ou B).";
             cout << endl << "Caso deseja sair, digite 'C' para voltar, sem devolucao do valor de entrada.";
             cin >> atirarArmar;
+            srand(time(NULL));
             for (j=0;j<3;j++) {
                 girarTambor = rand() % 6;
-                revolver[girarTambor] = 1;
+                revolver[girarTambor] = true;
                 for (i=0;i<6;i++) {
                     if (atirarArmar=='A' || atirarArmar=='a') {                               //opção de atirar no seco
-                        if (revolver[i]==1) {
+                        if (revolver[i]==true) {
                             cout << "Ouch! Voce perdeu uma vida!" << endl;
                             VidaUsuario--;
                             i = i*0 + 6;
+                            revolver[girarTambor] = false;
+                            cout << "Coloquei a bala aleatoriamente e girei o tambor." << endl;
                         } else {
                             cout << "Ok, voce sobreviveu, minha vez." << endl;
                         }
-                        if (revolver[i+1]==1) {
-                            cout << "**BANG** AI CACETE, sorte sua!" << endl;
-                            VidaBot--; 
-                            i = i*0 + 6;
-                        } else {
-                            cout << "Ufa! sua vez." << endl;
-                        }
                     }
                     if (atirarArmar=='B' || atirarArmar=='b') {                               //opção de engatilhar antes de atirar
-                        if (revolver[i+1]==1) {
-                            cout << "OUCH! Não deu muita sorte nessa ein!" << endl;
+                        if (revolver[i+1]==true) {
+                            cout << "OUCH! Nao deu muita sorte nessa ein!" << endl;
                             VidaUsuario--;
                             i = i*0 + 6;
+                            revolver[girarTambor] = false;
+                            cout << "Coloquei a bala aleatoriamente e girei o tambor." << endl;
                         } else {
                             cout << "Sortudo maldito! Minha vez." << endl;
                         }
-                        if (revolver[i+2]==1) {
+                    }
+
+                    escolhaBot = rand() % 1;                                  //randomização de escolha do bot
+                    if (escolhaBot==0) {
+                        if (revolver[i+1]==true) {
+                            cout << "**BANG** AI CACETE, sorte sua!" << endl;
+                            VidaBot--; 
+                            i = i*0 + 6;                                              //Caso ele escolha atirar
+                            revolver[girarTambor] = false;
+                            cout << "Coloquei a bala aleatoriamente e girei o tambor." << endl;
+                        } else {
+                            cout << "Ufa! sua vez." << endl;
+                        }
+                    } else if (escolhaBot==1) {
+                        if (revolver[i+2]==true) {
                             cout << "**BANG** AAAAAAH! CARALHO!" << endl;
                             VidaBot--;
-                            i = i*0 + 6;
+                            i = i*0 + 6;                                             //Caso ele escolha engatilhar
+                            revolver[girarTambor] = false;
+                            cout << "Coloquei a bala aleatoriamente e girei o tambor." << endl;
                         } else {
                             cout << "Meu cu chegou a passar nem wi-fi kkkkkk" << endl;
                         }
                     }
+                    
+                    cout << "Voce escolhe atirar direto ou engatilhar (A ou B)? ";                 //opção de atirar ou engatilhar antes de atirar
+                    cin >> atirarArmar;
                 }
-                cout << "Voce escolhe atirar direto ou engatilhar (A ou B)? ";                 //opção de atirar ou engatilhar antes de atirar
-                cin >> atirarArmar;
                 if (VidaUsuario==0) {
                     cout << "Que pena, voce morreu, perdeste 25 reais" << endl;
                     Dinheiro = Dinheiro - 25;                                        //se o jogador perde
