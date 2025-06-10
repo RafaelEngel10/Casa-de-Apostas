@@ -6,26 +6,28 @@
 using namespace std;
 
 int main() {
-    int OP,i,j,NumerosSorteados[6],NumerosEscolhidos[6],Contador; //variável de opção e opção 2, variável para função (for), vetor tipo Int para armazenar números
-    char Nome[30], s[3], R[3]; //vetor tipo Char para colocar seu nome, variável para armazenar resposta
+    int OP,i,j,NumerosSorteados[6],NumerosEscolhidos[6],Contador,girarTambor, VidaUsuario=3, VidaBot=3; 
+    //variável de opção e opção 2, variável para função (for), vetor tipo Int para armazenar números
+    char Nome[30], s[3], R[3], atirarArmar; //vetor tipo Char para colocar seu nome, vetor para armazenar símbolos, vetor para armazenar resposta,
     float Dinheiro, apostaValor; //variável que representa o dinheiro inicial do jogador
     bool Condicionador = false;   //pra aplicar uma condição de verdade ou falso  
     OP=0; Dinheiro=100; Contador=0;
     vector<char> Simbolos = {'@','#','$','&','*','%','/','?','!'};                //vetor tipo char para armazenar símbolos (slot machine)
+    vector<int> revolver(6, 0);                                            //vetor tipo int para armazenar 0 ou 1
 
     cout << "Antes de jogar, por favor digite seu nome: ";
     cin >> Nome;
     cout << "Ola " << Nome << "! Bem vindo a Diversao Virtual! Voce tem 100 reais para comecar sua diversao." << endl;
 
-    do {
+    do {                                                                                       //Menu Principal
        cout << "========= Diversao Virtual =========" << endl;  
-       cout << "1. MegaSena (RS20 para jogar)" << endl;
-       cout << "2. Alavanca da Sorte (RS10 de entrada para jogar)" << endl;
-       cout << "3. Corrida de Cavalo (RS10 de entrada para jogar)" << endl;                       //Menu principal
+       cout << "1. MegaSena (RS20 para jogar)" << endl;                                    //MegaSena de 1 a 60 
+       cout << "2. Alavanca da Sorte (RS10 de entrada para jogar)" << endl;                  //Slot Machine 
+       cout << "3. Corrida de Cavalo (RS15 de entrada para jogar)" << endl;                    //Corrida de Cavalos, você aposta no que achar ser o que vai chegar em primeiro
        cout << "4. " << endl;
        cout << "5. " << endl;
        cout << "6. " << endl;
-       cout << "7. Roleta Russa (RS50 para jogar)" << endl; 
+       cout << "7. Roleta Russa (RS50 para jogar)" << endl;                                //Roleta Russa com chance de triplicar o valor de entrada
        cout << "8. Sair" << endl;  
        if (Contador==0) {
         cout << "Voce apostou nenhuma vez." << endl; 
@@ -328,9 +330,67 @@ int main() {
             
 
         case 7: 
+            srand(time(NULL));
             Dinheiro -= 50;
-            cout << "Bem vindo a Roleta Russa! Nesse jogo, o programa ira gerar um numero aleatorio de 1 a 6 e voce tem que escolher entre atirar em si mesmo ou atirar no oponente." << endl;
-            cout << "Voce começa com 3 vidas, cada vez q tu atirar em si mesmo e for verdadeira, voce perde uma vida e perde a vez, senão voce ganha um vez extra.";
+            cout << "-50 reais." << endl;
+            cout << "Bem vindo a Roleta Russa! Nesse jogo, o programa ira gerar um numero aleatorio de 1 a 6 e voce tem que escolher entre atirar em si mesmo ou engatilhar a arma e atirar" << endl;
+            cout << endl << "Voce comeca com 3 vidas, cada vez q tu atirar em si mesmo e for verdadeira, voce perde uma vida.";
+            cout << "Explicacoes a parte, vamos começar.";
+            cout << endl << "Voce escolhe puxar o gatilho ou engatilhar a arma (A ou B).";
+            cout << endl << "Caso deseja sair, digite 'C' para voltar, sem devolucao do valor de entrada.";
+            cin >> atirarArmar;
+            for (j=0;j<3;j++) {
+                girarTambor = rand() % 6;
+                revolver[girarTambor] = 1;
+                for (i=0;i<6;i++) {
+                    if (atirarArmar=='A' || atirarArmar=='a') {                               //opção de atirar no seco
+                        if (revolver[i]==1) {
+                            cout << "Ouch! Voce perdeu uma vida!" << endl;
+                            VidaUsuario--;
+                            i = i*0 + 6;
+                        } else {
+                            cout << "Ok, voce sobreviveu, minha vez." << endl;
+                        }
+                        if (revolver[i+1]==1) {
+                            cout << "**BANG** AI CACETE, sorte sua!" << endl;
+                            VidaBot--; 
+                            i = i*0 + 6;
+                        } else {
+                            cout << "Ufa! sua vez." << endl;
+                        }
+                    }
+                    if (atirarArmar=='B' || atirarArmar=='b') {                               //opção de engatilhar antes de atirar
+                        if (revolver[i+1]==1) {
+                            cout << "OUCH! Não deu muita sorte nessa ein!" << endl;
+                            VidaUsuario--;
+                            i = i*0 + 6;
+                        } else {
+                            cout << "Sortudo maldito! Minha vez." << endl;
+                        }
+                        if (revolver[i+2]==1) {
+                            cout << "**BANG** AAAAAAH! CARALHO!" << endl;
+                            VidaBot--;
+                            i = i*0 + 6;
+                        } else {
+                            cout << "Meu cu chegou a passar nem wi-fi kkkkkk" << endl;
+                        }
+                    }
+                }
+                cout << "Voce escolhe atirar direto ou engatilhar (A ou B)? ";                 //opção de atirar ou engatilhar antes de atirar
+                cin >> atirarArmar;
+                if (VidaUsuario==0) {
+                    cout << "Que pena, voce morreu, perdeste 25 reais" << endl;
+                    Dinheiro = Dinheiro - 25;                                        //se o jogador perde
+                } else if (VidaBot==0) {
+                    cout << "Droga! Perdi para um palerma como voce. Parabens, voce triplicou seu valor de entrada" << endl;
+                    Dinheiro = Dinheiro + (Dinheiro * 3);                           //se o jogador ganhar
+                }
+                if (atirarArmar=='C') {
+                    cout << "Retornando ao menu principal." << endl;             //opção de desistência
+                    break;
+                }
+            }
+        Contador = Contador + 1;
         break;                  //final case 7
        
        default:
