@@ -11,7 +11,7 @@ int main() {
     float Dinheiro, apostaValor; //variável que representa o dinheiro inicial do jogador
     bool Condicionador = false;   //pra aplicar uma condição de verdade ou falso  
     OP=0; Dinheiro=100; Contador=0;
-    vector<char> Simbolos = {'@','#','$','&','*','%'};
+    vector<char> Simbolos = {'@','#','$','&','*','%','/','?','!'};                //vetor tipo char para armazenar símbolos (slot machine)
 
     cout << "Antes de jogar, por favor digite seu nome: ";
     cin >> Nome;
@@ -21,7 +21,7 @@ int main() {
        cout << "========= Diversao Virtual =========" << endl;  
        cout << "1. MegaSena (RS20 para jogar)" << endl;
        cout << "2. Alavanca da Sorte (RS10 de entrada para jogar)" << endl;
-       cout << "3. Corrida de Cavalo (RS10 de entrada para jogar)" << endl;
+       cout << "3. Corrida de Cavalo (RS10 de entrada para jogar)" << endl;                       //Menu principal
        cout << "4. " << endl;
        cout << "5. " << endl;
        cout << "6. " << endl;
@@ -45,11 +45,11 @@ int main() {
             cout << "Boa noite " << Nome << "! Vou gerar 6 numeros diferentes e se voce tem que acertar pelo menos um deles." << endl;
             srand(time(NULL));
             for (i=0;i<6;i++) {
-                NumerosSorteados[i] = rand()%60+1;
+                NumerosSorteados[i] = rand()%60+1;                                       //Geração de 6 números aleatórios
             }
-            cout << "Geracao aleatoria feita! Agora escreva os numeros. " << endl;
+            cout << "Geracao aleatoria feita! Agora escreva os numeros. " << endl;                      
             for (i=0;i<6;i++) {
-                cout << "Escreva o " << i+1 << "o numero: ";
+                cout << "Escreva o " << i+1 << "o numero: ";                         //leitura de 6 números do usuário
                 cin >> NumerosEscolhidos[i];
                 if (NumerosEscolhidos[i]>60) {
                     cout << "Escolha um numero entre 1 e 60!" << endl;
@@ -62,14 +62,14 @@ int main() {
                 cout << i+1 << "o numero sorteado: " << NumerosSorteados[i] << " / " << i+1 << "o numero escolhido: " << NumerosEscolhidos[i] << endl;
                 if (NumerosSorteados[i]==NumerosEscolhidos[i]) {
                     Condicionador = true;
-                    cout << endl << "Parabens, voce acertou o numero sorteado, na sua respectiva casa! +100 reais" << endl;
-                    cout << endl;
+                    cout << endl << "Parabens, voce acertou o numero sorteado, na sua respectiva casa! +100 reais" << endl;                 //Caso acerte o numero junto da casa
+                    cout << endl; 
                     Dinheiro = Dinheiro + 100;
                 } else {
                     for (j=0;j<6;j++) {
                     if (NumerosSorteados[i]==NumerosEscolhidos[j]) {                     
                         Condicionador = true;
-                        cout << endl <<"Parabens, voce acertou o numero sorteado, mas nao foi na respectiva casa. +30 reais" << endl;
+                        cout << endl <<"Parabens, voce acertou o numero sorteado, mas nao foi na respectiva casa. +30 reais" << endl;        //Caso acerte o número apenas
                         cout << endl;
                         Dinheiro = Dinheiro + 30; 
                         } 
@@ -77,7 +77,7 @@ int main() {
                 }
             }
             if (Condicionador==false) {      //se as estruturas condicionais não forem executadas, o Condicionador continuará como false, resultando na execução desta condição.
-                cout << "Que pena! Parece que voce nao acertou nem um numero. Talvez na proxima voce consiga!" << endl;
+                cout << "Que pena! Parece que voce nao acertou nem um numero. Talvez na proxima voce consiga!" << endl;      //Caso não acerte nada
             }
             Contador += 1;
         break;                   //final case 1
@@ -94,19 +94,19 @@ int main() {
                 cout << "21 a 50 reais = 3 jogadas." << endl;
                 cout << "51 a 100 reais = 4 jogadas." << endl;
                 cout << "100+ reais = 5 jogadas." << endl;
-                cout << "Digite 0 para desistir (sem retorno do valor de entrada)." << endl;
+                cout << "Digite 0 para desistir (sem retorno do valor de entrada)." << endl;                //Menu de valores da aposta
                 cout << "=====================================" << endl;
                 cout << "Qual vai ser o valor da sua aposta? ";
                 cin >> apostaValor; 
                 if (apostaValor>=1 && apostaValor<=10) {
                     srand(static_cast<unsigned>(time(0)));
-                    Dinheiro -= apostaValor;
+                    Dinheiro -= apostaValor;                                     //interação simples com o jogador
                     cout << "Certo, voce apostou " << apostaValor << " reais, agora voce vai poder puxar a alavanca e esperar o resultado. Vou puxa-la por ti." << endl;
-                    cout << endl;
+                    cout << endl;                                     
                     for (i=0;i<1;i++) {
                         cout << "Simbolos sorteados: ";
                         for (j=0;j<3;j++) {
-                            s[j] = Simbolos[rand() % Simbolos.size()];
+                            s[j] = Simbolos[rand() % Simbolos.size()];                    //sorteia 3 simbolos aleatoriamente
                             cout << s[j] << " ";
                         }
                         cout << endl; 
@@ -270,7 +270,7 @@ int main() {
 
                 if (apostaValor>100) {
                     srand(static_cast<unsigned>(time(0)));
-                    Dinheiro -= apostaValor;
+                    Dinheiro -= apostaValor;                                                           //interação com o jogador
                     cout << "Certo, voce apostou " << apostaValor << " reais, agora voce vai poder puxar a alavanca e esperar o resultado. Vou puxa-la por ti." << endl;
                     for (i=0;i<5;i++) {
                         cout << "Simbolos sorteados: ";
@@ -299,10 +299,10 @@ int main() {
                             cout << "Que ma sorte! Parece que voce nao conseguiu nem um simbolo igual se quer. Na proxima com certeza voce consegue!" << endl;
                         }
                         if (i==3 || i==2 ||i==1 || i==0) {                                                     //pergunta para não começar instantaneamente a próxima tentativa
-                            if (i==0) {
-                                cout << "Vamos para a " << i+2 << "a tentativa do senhor? ";
+                            if (i==0) {                                                                       
+                                cout << "Vamos para a " << i+2 << "a tentativa do senhor? ";                  
                             } else if (i==1) {
-                                cout << "Vamos para a " << i+2 <<"a tentativa do senhor? ";
+                                cout << "Vamos para a " << i+2 <<"a tentativa do senhor? ";                    //pequena interação com o jogador
                             } else 
                                 cout << "Vamos para a " << i+1 << "a tentativa do senhor? ";
                             cin >> R;
@@ -334,17 +334,17 @@ int main() {
         break;                  //final case 7
        
        default:
-        if (OP>8) {
-            cout << "Digite um numero valido." << endl;
+        if (OP>8 || OP<0) {
+            cout << "Digite um numero valido." << endl;                     //caso o usuário tente ser engraçadinho e escrever um número maior que 8 ou menor que 0
             break;
         } else if (OP==8) {
-            cout << "Saindo do jogo..." << endl;
+            cout << "Saindo do jogo..." << endl;                           //apenas uma interação básica com o usuário
             break;
         }
         break;
        }         //switch fecha-chave
        if (Dinheiro<=0) {
-            cout << "GAME OVER! Voce ficou sem dinheiro para apostar!" << endl;
+            cout << "GAME OVER! Voce ficou sem dinheiro para apostar!" << endl;                  //caso fique sem dinheiro, seu mundo acaba
             return 0;
        }
     } while (OP!=8);          //do fecha-chave
