@@ -51,6 +51,11 @@ int main() {
             for (i=0;i<6;i++) {
                 cout << "Escreva o " << i+1 << "o numero: ";
                 cin >> NumerosEscolhidos[i];
+                if (NumerosEscolhidos[i]>60) {
+                    cout << "Escolha um numero entre 1 e 60!" << endl;
+                    cout << "Escreva o " << i+1 << "o numero: ";
+                    cin >> NumerosEscolhidos[i];
+                }
             } 
             cout << endl;
             for (i=0;i<6;i++) {
