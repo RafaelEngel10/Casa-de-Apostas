@@ -334,10 +334,14 @@ int main() {
             cout << "-50 reais." << endl;
             cout << "Bem vindo a Roleta Russa! Nesse jogo, o programa ira gerar um numero aleatorio de 1 a 6 e voce tem que escolher entre atirar em si mesmo ou engatilhar a arma e atirar" << endl;
             cout << "Voce comeca com 3 vidas, cada vez q tu atirar em si mesmo e for verdadeira, voce perde uma vida.";
-            cout << " Explicacoes a parte, vamos comecar.";
+            cout << " Explicacoes a parte, vamos comecar." << endl;
             cout << endl << "Voce escolhe puxar o gatilho ou engatilhar a arma (A ou B).";
             cout << endl << "Caso deseja sair, digite 'C' para voltar, sem devolucao do valor de entrada.";
             cin >> atirarArmar;
+            if (atirarArmar=='C') {
+                cout << "Retornando ao menu principal." << endl;             //opção de desistência
+                break;
+            }
             srand(time(NULL));
             for (j=0;j<3;j++) {
                 girarTambor = rand() % 6;
@@ -370,7 +374,7 @@ int main() {
 
                     escolhaBot = rand() % 2;                                  //randomização de escolha do bot
                     if (escolhaBot==0) {
-                        cout << "**APERTA O GATILHO**" << endl;
+                        cout << endl << "**APERTA O GATILHO**" << endl;
                         if (revolver[i+1]==true) {
                             cout << "**BANG** AI CACETE, sorte sua!" << endl;
                             VidaBot--; 
@@ -382,7 +386,7 @@ int main() {
                             cout << "Ufa! sua vez." << endl;
                         }
                     } else if (escolhaBot==1) {
-                        cout << "**ENGATILHA O REVOLVER**" << endl;
+                        cout << endl << "**ENGATILHA O REVOLVER**" << endl;
                         if (revolver[i+2]==true) {
                             cout << "**BANG** AAAAAAH! CARALHO!" << endl;
                             VidaBot--;
@@ -404,10 +408,6 @@ int main() {
                 } else if (VidaBot==0) {
                     cout << "Droga! Perdi para um palerma como voce. Parabens, voce triplicou seu valor de entrada" << endl;
                     Dinheiro = Dinheiro + (Dinheiro * 3);                           //se o jogador ganhar
-                }
-                if (atirarArmar=='C') {
-                    cout << "Retornando ao menu principal." << endl;             //opção de desistência
-                    break;
                 }
             }
         Contador = Contador + 1;
