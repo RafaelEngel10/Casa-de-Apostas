@@ -333,8 +333,8 @@ int main() {
             Dinheiro -= 50;
             cout << "-50 reais." << endl;
             cout << "Bem vindo a Roleta Russa! Nesse jogo, o programa ira gerar um numero aleatorio de 1 a 6 e voce tem que escolher entre atirar em si mesmo ou engatilhar a arma e atirar" << endl;
-            cout << endl << "Voce comeca com 3 vidas, cada vez q tu atirar em si mesmo e for verdadeira, voce perde uma vida.";
-            cout << "Explicacoes a parte, vamos começar.";
+            cout << "Voce comeca com 3 vidas, cada vez q tu atirar em si mesmo e for verdadeira, voce perde uma vida.";
+            cout << " Explicacoes a parte, vamos comecar.";
             cout << endl << "Voce escolhe puxar o gatilho ou engatilhar a arma (A ou B).";
             cout << endl << "Caso deseja sair, digite 'C' para voltar, sem devolucao do valor de entrada.";
             cin >> atirarArmar;
@@ -347,6 +347,7 @@ int main() {
                         if (revolver[i]==true) {
                             cout << "Ouch! Voce perdeu uma vida!" << endl;
                             VidaUsuario--;
+                            cout << "Vida restante do jogador: " << VidaUsuario << endl;
                             i = i*0 + 6;
                             revolver[girarTambor] = false;
                             cout << "Coloquei a bala aleatoriamente e girei o tambor." << endl;
@@ -358,6 +359,7 @@ int main() {
                         if (revolver[i+1]==true) {
                             cout << "OUCH! Nao deu muita sorte nessa ein!" << endl;
                             VidaUsuario--;
+                            cout << "Vida restante do jogador: " << VidaUsuario << endl;
                             i = i*0 + 6;
                             revolver[girarTambor] = false;
                             cout << "Coloquei a bala aleatoriamente e girei o tambor." << endl;
@@ -366,11 +368,13 @@ int main() {
                         }
                     }
 
-                    escolhaBot = rand() % 1;                                  //randomização de escolha do bot
+                    escolhaBot = rand() % 2;                                  //randomização de escolha do bot
                     if (escolhaBot==0) {
+                        cout << "**APERTA O GATILHO**" << endl;
                         if (revolver[i+1]==true) {
                             cout << "**BANG** AI CACETE, sorte sua!" << endl;
                             VidaBot--; 
+                            cout << "Vida restante da casa: " << VidaBot << endl;
                             i = i*0 + 6;                                              //Caso ele escolha atirar
                             revolver[girarTambor] = false;
                             cout << "Coloquei a bala aleatoriamente e girei o tambor." << endl;
@@ -378,9 +382,11 @@ int main() {
                             cout << "Ufa! sua vez." << endl;
                         }
                     } else if (escolhaBot==1) {
+                        cout << "**ENGATILHA O REVOLVER**" << endl;
                         if (revolver[i+2]==true) {
                             cout << "**BANG** AAAAAAH! CARALHO!" << endl;
                             VidaBot--;
+                            cout << "Vida restante da casa: " << VidaBot << endl;
                             i = i*0 + 6;                                             //Caso ele escolha engatilhar
                             revolver[girarTambor] = false;
                             cout << "Coloquei a bala aleatoriamente e girei o tambor." << endl;
@@ -389,7 +395,7 @@ int main() {
                         }
                     }
                     
-                    cout << "Voce escolhe atirar direto ou engatilhar (A ou B)? ";                 //opção de atirar ou engatilhar antes de atirar
+                    cout << endl <<"Voce escolhe atirar direto ou engatilhar (A ou B)? ";                 //opção de atirar ou engatilhar antes de atirar
                     cin >> atirarArmar;
                 }
                 if (VidaUsuario==0) {
