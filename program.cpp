@@ -336,7 +336,7 @@ int main() {
             cout << "Voce comeca com 3 vidas, cada vez q tu atirar em si mesmo e for verdadeira, voce perde uma vida.";
             cout << " Explicacoes a parte, vamos comecar." << endl;
             cout << endl << "Voce escolhe puxar o gatilho ou engatilhar a arma (A ou B).";
-            cout << endl << "Caso deseja sair, digite 'C' para voltar, sem devolucao do valor de entrada.";
+            cout << endl << "Caso deseja sair, digite 'C' para voltar, sem devolucao do valor de entrada. ";
             cin >> atirarArmar;
             if (atirarArmar=='C') {
                 cout << "Retornando ao menu principal." << endl;             //opção de desistência
@@ -347,6 +347,9 @@ int main() {
                 girarTambor = rand() % 6;
                 revolver[girarTambor] = true;
                 for (i=0;i<6;i++) {
+                    cout << endl <<"Voce escolhe atirar direto ou engatilhar (A ou B)? ";                 //opção de atirar ou engatilhar antes de atirar
+                    cin >> atirarArmar;
+                    cout << endl;
                     if (atirarArmar=='A' || atirarArmar=='a') {                               //opção de atirar no seco
                         if (revolver[i]==true) {
                             cout << "Ouch! Voce perdeu uma vida!" << endl;
@@ -399,15 +402,13 @@ int main() {
                         }
                     }
                     
-                    cout << endl <<"Voce escolhe atirar direto ou engatilhar (A ou B)? ";                 //opção de atirar ou engatilhar antes de atirar
-                    cin >> atirarArmar;
-                }
-                if (VidaUsuario==0) {
-                    cout << "Que pena, voce morreu, perdeste 25 reais" << endl;
-                    Dinheiro = Dinheiro - 25;                                        //se o jogador perde
-                } else if (VidaBot==0) {
-                    cout << "Droga! Perdi para um palerma como voce. Parabens, voce triplicou seu valor de entrada" << endl;
-                    Dinheiro = Dinheiro + (Dinheiro * 3);                           //se o jogador ganhar
+                    if (VidaUsuario==0) {
+                        cout << "Que pena, voce morreu, perdeste 25 reais" << endl;
+                        Dinheiro = Dinheiro - 25;                                        //se o jogador perde
+                    } else if (VidaBot==0) {
+                        cout << "Droga! Perdi para um palerma como voce. Parabens, voce triplicou seu valor de entrada" << endl;
+                        Dinheiro = Dinheiro + (Dinheiro * 3);                           //se o jogador ganhar
+                    }
                 }
             }
         Contador = Contador + 1;
