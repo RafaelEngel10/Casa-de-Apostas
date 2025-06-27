@@ -3,20 +3,29 @@
 #include <vector>
 #include <cstdlib>
 #include <stdio.h>
+#include <string.h>
 using namespace std;
 
+
 int main() {
-    int OP,i,j,NumerosSorteados[6],NumerosEscolhidos[6],Contador,girarTambor, VidaUsuario=3, VidaBot=3, escolhaBot; 
-    //variável de opção e opção 2, variável para função (for), vetor tipo Int para armazenar números, vida do usuário e do robô, variável de escolha do robô
+    int OP,i,j,NumerosSorteados[6],NumerosEscolhidos[6],Contador,girarTambor, VidaUsuario=3, VidaBot=3, escolhaBot, escolhaCavalo; 
+    //variável de opção e opção 2, variável para função (for), vetor tipo Int para armazenar números, vida do usuário e do robô, variável de escolha do robô, variável de escolha do cavalo
+    int progresso[LINHAS] = { 0 }, vencedor = -1;
     char Nome[30], s[3], R[3], atirarArmar; //vetor tipo Char para colocar seu nome, vetor para armazenar símbolos, vetor para armazenar resposta,
     float Dinheiro, apostaValor; //variável que representa o dinheiro inicial do jogador
-    bool Condicionador = false;   //pra aplicar uma condição de verdade ou falso  
+    bool Condicionador = false, vencedorCorrida = false;   //pra aplicar uma condição de verdade ou falso  
     OP=0; Dinheiro=100; Contador=0;
     vector<char> Simbolos = {'@','#','$','&','*','%','/','?','!'};                //vetor tipo char para armazenar símbolos (slot machine)
-    bool revolver[6] = {false, false, false, false, false, false};                                          //vetor tipo bool armazenando false em todas as posições
+    bool revolver[6] = {false, false, false, false, false, false};                         //vetor tipo bool armazenando false em todas as posições
+    bool corridaCavalo[4][8] = {
+        {false, false, false, false, false, false, false, false},
+        {false, false, false, false, false, false, false, false},
+        {false, false, false, false, false, false, false, false},                        //matriz tipo bool armazendo false em todas as posições (de forma bem verbosa)
+        {false, false, false, false, false, false, false, false}                         // uma opção menos verbosa seria *bool corridaCavalo[4][8] = { false };*
+    };
 
     cout << "Antes de jogar, por favor digite seu nome: ";
-    cin >> Nome;
+    cin.getline(Nome,30);
     cout << "Ola " << Nome << "! Bem vindo a Diversao Virtual! Voce tem 100 reais para comecar sua diversao." << endl;
 
     do {                                                                                       //Menu Principal
@@ -337,7 +346,35 @@ int main() {
         break;                       //final case 2
 
         case 3: 
+            if (Dinheiro<15) {
+                cout << "Desculpa, mas voce nao tem dinheiro para poder realizar essa acao." << endl;                //Caso o jogador não tenha dinheiro para pagar a entrada
+                break;
+            }
+            Dinheiro -= 15;
+            apostaValor = 0; corridaCavalo[4][8] = { false }; 
+            srand(time(NULL));
+            cout << "-15 reais." << endl;
+            cout << "Boa noite " << Nome << "! Esta e uma corrida de cavalos. Aqui voce apostara no cavalo que voce acha que vai ganhar." << endl;
+            cout << "Caso seu cavalo ganhe, teu dinheiro apostado sera dobrado. Senao, voce so perdera seu dinheiro mesmo." << endl;
+            cout << endl << "Qual vai ser o seu cavalo? (1, 2, 3 ou 4)";
+            cin >> escolhaCavalo;
+            cout << endl << "Quanto sera apostado nele?";
+            cin >> apostaValor;
+            if (apostaValor>Dinheiro) {
+                do {
+                    cout << "O senhor nao possui esse dinheiro para apostar." << endl;
+                    cout << "Quanto sera apostado nele?";
+                    cin >> apostaValor;
+                } while (apostaValor>0 );
+            } else {
+                Dinheiro -= apostaValor;
+            }
+
+            cout << endl << "Apostas feitas, vamos dar inicio a corrida. 3, 2, 1. **BANG**" << endl;
+            linha = rand() % 4;
+            corridaCavalo[linha][0] = true;
             
+            break;
 
         case 7: 
             if (Dinheiro<50) {
@@ -448,4 +485,23 @@ int main() {
     return 0;
 }        //int main() fecha-chave
 
-// NADA AQUI!
+
+
+
+
+
+const int LINHAS = 4; const int COLUNAS = 8;            //variáveis para o void 
+
+void mostrarCorrida(bool matriz[LINHAS][COLUNAS]) {                           //função secundária tipo void para que eu possa trabalhar na parte visual da corrida
+    system("clear");                                       
+    for (int i=0; i<LINHAS; i++) {                             //sim, precisa declarar o i denovo
+        cout << "Cavalo " << i + 1 << " | ";
+        for (int j = 0; j < COLUNAS; ++j) {
+            cout << (matriz[i][j] ? ">" : "-") << " ";
+        }
+        cout << " ";
+    }
+cout << endl;
+}
+
+// Mais nada para baixo, apenas... o vazio..., o vazio é tão... aconchegante...
