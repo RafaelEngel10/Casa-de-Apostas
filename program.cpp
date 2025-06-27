@@ -448,5 +448,4 @@ int main() {
     return 0;
 }        //int main() fecha-chave
 
-
-//COLOCAR SISTEMA DE QUE SE A APOSTA FOR MAIOR QUE O DINHEIRO, NÃO PERMITIR QUE O JOGADOR CONTINUE COM A AÇÃO 
+// NADA AQUI!
