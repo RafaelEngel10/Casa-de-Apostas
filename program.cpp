@@ -4,8 +4,23 @@
 #include <cstdlib>
 #include <stdio.h>
 #include <string.h>
+#include <thread>                                           //thread e chrono são bibliotecas que adicionam DELAY na hora de mostrar mensagens
+#include <chrono>                                           //vou adicionar DELAY em várias mensagens, algum dia aí
 using namespace std;
 
+const int LINHAS = 4; const int COLUNAS = 8;            //variáveis para o void 
+
+void mostrarCorrida(bool corridaCavalo[LINHAS][COLUNAS]) {                        //função secundária tipo void para que eu possa trabalhar na parte visual da corrida 
+    for (int i=0; i<LINHAS; i++) {                                           //sim, precisa declarar o i denovo
+        cout << "Cavalo " << i + 1 << " | ";
+        for (int j = 0; j < COLUNAS; ++j) {
+            cout << (corridaCavalo[i][j] ? ">" : "-") << " ";
+        }
+        _sleep(2000);                                     //a função _sleep é em milissegundos, 2000ms são equivalentes a 2 segundos, lembre-se disso!
+        cout << endl;
+    }
+    cout << endl;
+}
 
 int main() {
     int OP,i,j,NumerosSorteados[6],NumerosEscolhidos[6],Contador,girarTambor, VidaUsuario=3, VidaBot=3, escolhaBot, escolhaCavalo; 
@@ -351,7 +366,7 @@ int main() {
                 break;
             }
             Dinheiro -= 15;
-            apostaValor = 0; corridaCavalo[4][8] = { false }; 
+            apostaValor = 0; vencedor = -1; vencedorCorrida = false; 
             srand(time(NULL));
             cout << "-15 reais." << endl;
             cout << "Boa noite " << Nome << "! Esta e uma corrida de cavalos. Aqui voce apostara no cavalo que voce acha que vai ganhar." << endl;
@@ -371,10 +386,35 @@ int main() {
             }
 
             cout << endl << "Apostas feitas, vamos dar inicio a corrida. 3, 2, 1. **BANG**" << endl;
-            linha = rand() % 4;
-            corridaCavalo[linha][0] = true;
-            
-            break;
+            cout << "APROVEITEM O ESPETACULO!" << endl;
+            srand(time(0)); 
+
+            while (!vencedorCorrida) {
+                for (i=0; i<LINHAS; i++) {
+                    if (progresso[i]<COLUNAS) {
+                        if (rand() % 2 == 0) {
+                            corridaCavalo[i][progresso[i]] = true;                //preguiça de explicar isso
+                            progresso[i]++;
+                        }
+                    }
+                    if (progresso[i] == COLUNAS) {
+                        vencedorCorrida = true;
+                        vencedor = i;
+                        break;
+                    }   
+                }
+                mostrarCorrida(corridaCavalo);                              //mostra a parte visual do negócio todo
+            }               //while fecha-chave
+
+            cout << "Cavalo " << vencedor + 1 << " venceu a corrida!" << endl;
+            if (vencedor+1==escolhaCavalo) {
+                apostaValor = apostaValor * 2;
+                Dinheiro = Dinheiro + apostaValor;
+                cout << "Voce ganhou, parabens! Sua aposta foi dobrada e devolvida ao seu bolso." << endl;                        
+            } else {
+                cout << "Bom, nao da para esperar que va ganhar todas ne?" << endl;
+            }
+            break;                                                                   //final case 3
 
         case 7: 
             if (Dinheiro<50) {
@@ -484,24 +524,5 @@ int main() {
     
     return 0;
 }        //int main() fecha-chave
-
-
-
-
-
-
-const int LINHAS = 4; const int COLUNAS = 8;            //variáveis para o void 
-
-void mostrarCorrida(bool matriz[LINHAS][COLUNAS]) {                           //função secundária tipo void para que eu possa trabalhar na parte visual da corrida
-    system("clear");                                       
-    for (int i=0; i<LINHAS; i++) {                             //sim, precisa declarar o i denovo
-        cout << "Cavalo " << i + 1 << " | ";
-        for (int j = 0; j < COLUNAS; ++j) {
-            cout << (matriz[i][j] ? ">" : "-") << " ";
-        }
-        cout << " ";
-    }
-cout << endl;
-}
 
 // Mais nada para baixo, apenas... o vazio..., o vazio é tão... aconchegante...
