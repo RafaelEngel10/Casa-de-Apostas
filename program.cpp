@@ -41,6 +41,10 @@ int main() {
        switch (OP) {
 
         case 1:
+            if (Dinheiro<20) {
+                cout << "Desculpa, mas voce nao tem dinheiro para poder realizar essa acao." << endl;
+                break;
+            }
             Condicionador = false;
             Dinheiro -= 20;
             cout << "-20 reais." << endl;
@@ -81,10 +85,15 @@ int main() {
             if (Condicionador==false) {      //se as estruturas condicionais não forem executadas, o Condicionador continuará como false, resultando na execução desta condição.
                 cout << "Que pena! Parece que voce nao acertou nem um numero. Talvez na proxima voce consiga!" << endl;      //Caso não acerte nada
             }
+            cout << endl;
             Contador += 1;
         break;                   //final case 1
 
         case 2: 
+            if (Dinheiro<10) {
+                cout << "Desculpa, mas voce nao tem dinheiro para poder realizar essa acao." << endl;
+                break;
+            }
             Dinheiro -= 10;
             cout << "-10 reais." << endl;
             cout << "Bem vindo a Alavanca da Sorte " << Nome << "! Basta inserir uma aposta que desejar e caso venca, essa aposta volta para voce em dobro, mas caso perca a aposta fica com a gente." << endl;
@@ -324,12 +333,17 @@ int main() {
                 }
 
             } while (apostaValor!=0);                         //condição da função "do"
+            cout << endl;
         break;                       //final case 2
 
         case 3: 
             
 
         case 7: 
+            if (Dinheiro<50) {
+                cout << "Desculpa, mas voce nao tem dinheiro para poder realizar essa acao." << endl;
+                break;
+            }
             Dinheiro -= 50;
             cout << "-50 reais." << endl;
             cout << "Bem vindo a Roleta Russa! Nesse jogo, o programa ira gerar um numero aleatorio de 1 a 6 e voce tem que escolher entre atirar em si mesmo ou engatilhar a arma e atirar" << endl;
@@ -412,6 +426,7 @@ int main() {
                 }
             }
         Contador = Contador + 1;
+        cout << endl;
         break;                  //final case 7
        
        default:
@@ -424,7 +439,7 @@ int main() {
         }
         break;
        }         //switch fecha-chave
-       if (Dinheiro<=0) {
+       if (Dinheiro<=0 || Dinheiro<10) {
             cout << "GAME OVER! Voce ficou sem dinheiro para apostar!" << endl;                  //caso fique sem dinheiro, seu mundo acaba
             return 0;
        }
