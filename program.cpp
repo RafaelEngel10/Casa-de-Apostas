@@ -6,19 +6,20 @@
 #include <string.h>
 #include <thread>                                           //thread e chrono são bibliotecas que adicionam DELAY na hora de mostrar mensagens
 #include <chrono>                                           //vou adicionar DELAY em várias mensagens, algum dia aí
+#include <windows.h>                                       //para ter a função Sleep()
 using namespace std;
 
-const int LINHAS = 4; const int COLUNAS = 8;            //variáveis para o void 
+const int LINHAS = 4; const int COLUNAS = 8;            //variáveis para o void
 
 void mostrarCorrida(bool corridaCavalo[LINHAS][COLUNAS]) {                        //função secundária tipo void para que eu possa trabalhar na parte visual da corrida 
     for (int i=0; i<LINHAS; i++) {                                           //sim, precisa declarar o i denovo
         cout << "Cavalo " << i + 1 << " | ";
-        for (int j = 0; j < COLUNAS; ++j) {
+        for (int j=0; j<COLUNAS; ++j) {
             cout << (corridaCavalo[i][j] ? ">" : "-") << " ";
         }
-        _sleep(2000);                                     //a função _sleep é em milissegundos, 2000ms são equivalentes a 2 segundos, lembre-se disso!
         cout << endl;
     }
+    Sleep(1000);                                     //a função Sleep é em milissegundos, 1000ms são equivalentes a 1s, lembre-se disso!
     cout << endl;
 }
 
@@ -41,7 +42,9 @@ int main() {
 
     cout << "Antes de jogar, por favor digite seu nome: ";
     cin.getline(Nome,30);
+    Sleep(1000);
     cout << "Ola " << Nome << "! Bem vindo a Diversao Virtual! Voce tem 100 reais para comecar sua diversao." << endl;
+    Sleep(1500);
 
     do {                                                                                       //Menu Principal
        cout << "========= Diversao Virtual =========" << endl;  
@@ -72,24 +75,29 @@ int main() {
             Condicionador = false;
             Dinheiro -= 20;
             cout << "-20 reais." << endl;
+            Sleep(500);
             cout << "Boa noite " << Nome << "! Vou gerar 6 numeros diferentes e se voce tem que acertar pelo menos um deles." << endl;
             srand(time(NULL));
             for (i=0;i<6;i++) {
                 NumerosSorteados[i] = rand()%60+1;                                       //Geração de 6 números aleatórios
             }
+            Sleep(2000);
             cout << "Geracao aleatoria feita! Agora escreva os numeros. " << endl;                      
             for (i=0;i<6;i++) {
                 cout << "Escreva o " << i+1 << "o numero: ";                         //leitura de 6 números do usuário
+                Sleep(500);
                 cin >> NumerosEscolhidos[i];
                 if (NumerosEscolhidos[i]>60) {
                     cout << "Escolha um numero entre 1 e 60!" << endl;
                     cout << "Escreva o " << i+1 << "o numero: ";
                     cin >> NumerosEscolhidos[i];
+                    Sleep(1000);
                 }
             } 
             cout << endl;
             for (i=0;i<6;i++) {
                 cout << i+1 << "o numero sorteado: " << NumerosSorteados[i] << " / " << i+1 << "o numero escolhido: " << NumerosEscolhidos[i] << endl;
+                Sleep(1000);
                 if (NumerosSorteados[i]==NumerosEscolhidos[i]) {
                     Condicionador = true;
                     cout << endl << "Parabens, voce acertou o numero sorteado, na sua respectiva casa! +100 reais" << endl;                 //Caso acerte o numero junto da casa
@@ -107,6 +115,7 @@ int main() {
                 }
             }
             if (Condicionador==false) {      //se as estruturas condicionais não forem executadas, o Condicionador continuará como false, resultando na execução desta condição.
+                Sleep(1000);
                 cout << "Que pena! Parece que voce nao acertou nem um numero. Talvez na proxima voce consiga!" << endl;      //Caso não acerte nada
             }
             cout << endl;
@@ -371,14 +380,14 @@ int main() {
             cout << "-15 reais." << endl;
             cout << "Boa noite " << Nome << "! Esta e uma corrida de cavalos. Aqui voce apostara no cavalo que voce acha que vai ganhar." << endl;
             cout << "Caso seu cavalo ganhe, teu dinheiro apostado sera dobrado. Senao, voce so perdera seu dinheiro mesmo." << endl;
-            cout << endl << "Qual vai ser o seu cavalo? (1, 2, 3 ou 4)";
+            cout << endl << "Qual vai ser o seu cavalo? (1, 2, 3 ou 4) ";
             cin >> escolhaCavalo;
-            cout << endl << "Quanto sera apostado nele?";
+            cout << endl << "Quanto sera apostado nele? ";
             cin >> apostaValor;
             if (apostaValor>Dinheiro) {
                 do {
                     cout << "O senhor nao possui esse dinheiro para apostar." << endl;
-                    cout << "Quanto sera apostado nele?";
+                    cout << "Quanto sera apostado nele? ";
                     cin >> apostaValor;
                 } while (apostaValor>0 );
             } else {
