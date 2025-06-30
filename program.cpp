@@ -3,18 +3,17 @@
 #include <vector>
 #include <cstdlib>
 #include <stdio.h>
-#include <string.h>
-#include <thread>                                           //thread e chrono são bibliotecas que adicionam DELAY na hora de mostrar mensagens
-#include <chrono>                                           //vou adicionar DELAY em várias mensagens, algum dia aí
+#include <string.h>                                         //sem uso grande por enquanto
 #include <windows.h>                                       //para ter a função Sleep()
 using namespace std;
 
-const int LINHAS = 4; const int COLUNAS = 8;            //variáveis para o void
+const int Linhas = 4; const int Colunas = 8;            //variáveis para o void
 
-void mostrarCorrida(bool corridaCavalo[LINHAS][COLUNAS]) {                        //função secundária tipo void para que eu possa trabalhar na parte visual da corrida 
-    for (int i=0; i<LINHAS; i++) {                                           //sim, precisa declarar o i denovo
+void mostrarCorrida(bool corridaCavalo[Linhas][Colunas]) {                        //função secundária tipo void para que eu possa trabalhar na parte visual da corrida 
+    cout << "APROVEITEM O ESPETACULO!" << endl;
+    for (int i=0; i<Linhas; i++) {                                           //sim, precisa declarar o i denovo
         cout << "Cavalo " << i + 1 << " | ";
-        for (int j=0; j<COLUNAS; ++j) {
+        for (int j=0; j<Colunas; ++j) {
             cout << (corridaCavalo[i][j] ? ">" : "-") << " ";
         }
         cout << endl;
@@ -26,7 +25,7 @@ void mostrarCorrida(bool corridaCavalo[LINHAS][COLUNAS]) {                      
 int main() {
     int OP,i,j,NumerosSorteados[6],NumerosEscolhidos[6],Contador,girarTambor, VidaUsuario=3, VidaBot=3, escolhaBot, escolhaCavalo; 
     //variável de opção e opção 2, variável para função (for), vetor tipo Int para armazenar números, vida do usuário e do robô, variável de escolha do robô, variável de escolha do cavalo
-    int progresso[LINHAS] = { 0 }, vencedor = -1;
+    int progresso[Linhas] = { 0 }, vencedor = -1;
     char Nome[30], s[3], R[3], atirarArmar; //vetor tipo Char para colocar seu nome, vetor para armazenar símbolos, vetor para armazenar resposta,
     float Dinheiro, apostaValor; //variável que representa o dinheiro inicial do jogador
     bool Condicionador = false, vencedorCorrida = false;   //pra aplicar uma condição de verdade ou falso  
@@ -395,18 +394,24 @@ int main() {
             }
 
             cout << endl << "Apostas feitas, vamos dar inicio a corrida. 3, 2, 1. **BANG**" << endl;
-            cout << "APROVEITEM O ESPETACULO!" << endl;
-            srand(time(0)); 
+            srand(time(NULL) + rand());                                //evita que o mesmo cavalo ganhe
+
+            for (int i = 0; i < Linhas; i++) {
+                progresso[i] = 0;                                     //zera a posição dos cavalos
+                for (int j = 0; j < Colunas; j++) {
+                    corridaCavalo[i][j] = false;                    //limpa a parte visual
+                }
+            }
 
             while (!vencedorCorrida) {
-                for (i=0; i<LINHAS; i++) {
-                    if (progresso[i]<COLUNAS) {
+                for (i=0; i<Linhas; i++) {
+                    if (progresso[i]<Colunas) {
                         if (rand() % 2 == 0) {
                             corridaCavalo[i][progresso[i]] = true;                //preguiça de explicar isso
                             progresso[i]++;
                         }
                     }
-                    if (progresso[i] == COLUNAS) {
+                    if (progresso[i] == Colunas) {
                         vencedorCorrida = true;
                         vencedor = i;
                         break;
