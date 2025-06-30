@@ -70,6 +70,9 @@ int main() {
             if (Dinheiro<20) {
                 cout << "Desculpa, mas voce nao tem dinheiro para poder realizar essa acao." << endl;
                 break;
+            } else if (Dinheiro<=0) {
+                cout << "GAME OVER! Voce ficou sem dinheiro para apostar!" << endl;
+                return 0;
             }
             Condicionador = false;
             Dinheiro -= 20;
@@ -81,13 +84,15 @@ int main() {
                 NumerosSorteados[i] = rand()%60+1;                                       //Geração de 6 números aleatórios
             }
             Sleep(2000);
-            cout << "Geracao aleatoria feita! Agora escreva os numeros. " << endl;                      
+            cout << "Geracao aleatoria feita! Agora escreva os numeros. " << endl;
+            Sleep(250);                      
             for (i=0;i<6;i++) {
                 cout << "Escreva o " << i+1 << "o numero: ";                         //leitura de 6 números do usuário
                 Sleep(500);
                 cin >> NumerosEscolhidos[i];
                 if (NumerosEscolhidos[i]>60) {
                     cout << "Escolha um numero entre 1 e 60!" << endl;
+                    Sleep(500);
                     cout << "Escreva o " << i+1 << "o numero: ";
                     cin >> NumerosEscolhidos[i];
                     Sleep(1000);
@@ -101,6 +106,7 @@ int main() {
                     Condicionador = true;
                     cout << endl << "Parabens, voce acertou o numero sorteado, na sua respectiva casa! +100 reais" << endl;                 //Caso acerte o numero junto da casa
                     cout << endl; 
+                    Sleep(650);
                     Dinheiro = Dinheiro + 100;
                 } else {
                     for (j=0;j<6;j++) {
@@ -108,6 +114,7 @@ int main() {
                         Condicionador = true;
                         cout << endl <<"Parabens, voce acertou o numero sorteado, mas nao foi na respectiva casa. +30 reais" << endl;        //Caso acerte o número apenas
                         cout << endl;
+                        Sleep(650);
                         Dinheiro = Dinheiro + 30; 
                         } 
                     }
@@ -116,6 +123,7 @@ int main() {
             if (Condicionador==false) {      //se as estruturas condicionais não forem executadas, o Condicionador continuará como false, resultando na execução desta condição.
                 Sleep(1000);
                 cout << "Que pena! Parece que voce nao acertou nem um numero. Talvez na proxima voce consiga!" << endl;      //Caso não acerte nada
+                Sleep(500);
             }
             cout << endl;
             Contador += 1;
@@ -124,30 +132,41 @@ int main() {
         case 2: 
             if (Dinheiro<10) {
                 cout << "Desculpa, mas voce nao tem dinheiro para poder realizar essa acao." << endl;
+                Sleep(500);
                 break;
+            } else if (Dinheiro<=0) {
+                cout << "GAME OVER! Voce ficou sem dinheiro para apostar!" << endl;
+                Sleep(500);
+                return 0;
             }
             Dinheiro -= 10;
             cout << "-10 reais." << endl;
+            Sleep(250);
             cout << "Bem vindo a Alavanca da Sorte " << Nome << "! Basta inserir uma aposta que desejar e caso venca, essa aposta volta para voce em dobro, mas caso perca a aposta fica com a gente." << endl;
+            Sleep(1000);
             cout << "Cada valor tem um numero de vezes que voce pode puxar a alavanca, aqui vai uma tabela de precos com as jogadas." << endl;
+            Sleep(500);
             do {                                                                          //começo do "do"
                 cout << "========= Tabela de Valores =========" << endl;
-                cout << "1 a 10 reais = 1 jogada." << endl;
-                cout << "11 a 20 reais = 2 jogadas." << endl;
-                cout << "21 a 50 reais = 3 jogadas." << endl;
-                cout << "51 a 100 reais = 4 jogadas." << endl;
+                cout << "10 reais = 1 jogada." << endl;
+                cout << "20 reais = 2 jogadas." << endl;
+                cout << "40 reais = 3 jogadas." << endl;
+                cout << "60 reais = 4 jogadas." << endl;
                 cout << "100+ reais = 5 jogadas." << endl;
                 cout << "Digite 0 para desistir (sem retorno do valor de entrada)." << endl;                //Menu de valores da aposta
                 cout << "=====================================" << endl;
-                cout << "Qual vai ser o valor da sua aposta? ";
+                Sleep(500);
+                cout << "Qual vai ser o valor da sua aposta? "; 
                 cin >> apostaValor; 
-                if (apostaValor>=1 && apostaValor<=10) {
+                if (apostaValor==10) {
                     srand(static_cast<unsigned>(time(0)));
                     Dinheiro -= apostaValor;                                     //interação simples com o jogador
                     cout << "Certo, voce apostou " << apostaValor << " reais, agora voce vai poder puxar a alavanca e esperar o resultado. Vou puxa-la por ti." << endl;
-                    cout << endl;                                     
+                    cout << endl; 
+                    Sleep(800);                                    
                     for (i=0;i<1;i++) {
                         cout << "Simbolos sorteados: ";
+                        Sleep(500);
                         for (j=0;j<3;j++) {
                             s[j] = Simbolos[rand() % Simbolos.size()];                    //sorteia 3 simbolos aleatoriamente
                             cout << s[j] << " ";
@@ -156,35 +175,46 @@ int main() {
                         if (s[0]==s[1] && s[0]==s[2]) {                                   //se os tres simbolos forem iguais, isto acontece
                             Condicionador = true;
                             cout << "Que grande sorte! Voce conseguiu tres simbolos iguais! Seu premio e o dobro do que foi apostado!" << endl;      
-                            cout << "Dinheiro ganho = " << apostaValor * 2 << endl;                                         
+                            Sleep(500);
+                            cout << "Dinheiro ganho = " << apostaValor * 2 << endl;   
+                            Sleep(750);                                      
                             Dinheiro = Dinheiro + (apostaValor * 2);
                         } else if (s[0]==s[1] && s[0]!=s[2]) {                            //se pelo menos dois simbolos forem iguais
                             Condicionador = true;
                             cout << "Parece que voce conseguiu dois simbolos iguais! Seu premio e o valor apostado mais metade dele mesmo!" << endl;
+                            Sleep(500);
                             cout << "Dinheiro ganho = " << apostaValor + (apostaValor * 0.5) << endl;
+                            Sleep(750);
                             Dinheiro = Dinheiro + (apostaValor + (apostaValor * 0.5));
                         } else if (s[0]==s[2] && s[0]!=s[1]) {                            //se pelo menos dois simbolos forem iguais
                             Condicionador = true;
                             cout << "Parece que voce conseguiu dois simbolos iguais! Seu premio e o valor apostado mais metade dele mesmo!" << endl;
+                            Sleep(500);
                             cout << "Dinheiro ganho = " << apostaValor + (apostaValor * 0.5) << endl;
+                            Sleep(750);
                             Dinheiro = Dinheiro + (apostaValor + (apostaValor * 0.5));
                         } else if (s[1]==s[2] && s[2]!=s[0]) {                            //se pelo menos dois simbolos forem iguais
                             Condicionador = true; 
                             cout << "Parece que voce conseguiu dois simbolos iguais! Seu premio e o valor apostado mais metade dele mesmo!" << endl;
+                            Sleep(500);
                             cout << "Dinheiro ganho = " << apostaValor + (apostaValor * 0.5) << endl;
+                            Sleep(750);
                             Dinheiro = Dinheiro + (apostaValor + (apostaValor * 0.5));
                         } else {                                       //se nem um for igual
                             cout << "Que ma sorte! Parece que voce nao conseguiu nem um simbolo igual se quer. Na proxima com certeza voce consegue!" << endl;
+                            Sleep(500);
                         }
                     }                                                      //terminação do primeiro "for"
                 }                                                     //terminação da primeira condição de valor da aposta
 
-                if (apostaValor>=11 && apostaValor<=20) {
+                if (apostaValor==20) {
                     srand(static_cast<unsigned>(time(0)));
                     Dinheiro -= apostaValor;
                     cout << "Certo, voce apostou " << apostaValor << " reais, agora voce vai poder puxar a alavanca e esperar o resultado. Vou puxa-la por ti." << endl;
+                    Sleep(800);
                     for (i=0;i<2;i++) {
                         cout << "Simbolos sorteados: ";
+                        Sleep(500);
                         for (j=0;j<3;j++) {
                             s[j] = Simbolos[rand() % Simbolos.size()];
                             cout << s[j] << " ";
@@ -192,22 +222,29 @@ int main() {
                         cout << endl; 
                         if (s[0]==s[1] && s[0]==s[2]) {                                   //se os tres simbolos forem iguais, isto acontece
                             Condicionador = true;
-                            cout << "Que grande sorte! Voce conseguiu tres simbolos iguais! Seu premio e o dobro do que foi apostado!" << endl;      
-                            cout << "Dinheiro ganho = " << apostaValor * 2 << endl;                                         
+                            cout << "Que grande sorte! Voce conseguiu tres simbolos iguais! Seu premio e o dobro do que foi apostado!" << endl;  
+                            Sleep(500);    
+                            cout << "Dinheiro ganho = " << apostaValor * 2 << endl;   
+                            Sleep(750);                                      
                             Dinheiro = Dinheiro + (apostaValor * 2);
                         } else if (s[0]==s[1] && s[0]!=s[2]) {                            //se pelo menos dois simbolos forem iguais
                             Condicionador = true;
                             cout << "Parece que voce conseguiu dois simbolos iguais! Seu premio e o valor apostado mais metade dele mesmo!" << endl;
+                            Sleep(500);
                             cout << "Dinheiro ganho = " << apostaValor + (apostaValor * 0.5) << endl;
+                            Sleep(750);
                             Dinheiro = Dinheiro + (apostaValor + (apostaValor * 0.5));
                         } else if (s[0]!=s[1] && s[0]==s[2]) {                            //se pelo menos dois simbolos forem iguais
                             Condicionador = true;
                             cout << "Parece que voce conseguiu dois simbolos iguais! Seu premio e o valor apostado mais metade dele mesmo!" << endl;
+                            Sleep(500);
                             cout << "Dinheiro ganho = " << apostaValor + (apostaValor * 0.5) << endl;
+                            Sleep(750);
                             Dinheiro = Dinheiro + (apostaValor + (apostaValor * 0.5));
                         }
                         if (Condicionador==false) {                                       //se nem um for igual
                             cout << "Que ma sorte! Parece que voce nao conseguiu nem um simbolo igual se quer. Na proxima com certeza voce consegue!" << endl;
+                            Sleep(500);
                         }
                         if (i==0) {                                                     //pergunta para não começar instantaneamente a segunda tentativa
                             cout << "Vamos para a segunda tentativa do senhor? ";
@@ -217,12 +254,14 @@ int main() {
                     }                                               //terminação do segundo "for"
                 }                                                //terminação da segunda condição de valor da aposta
 
-                if (apostaValor>=21 && apostaValor<=50) {
+                if (apostaValor==40) {
                     srand(static_cast<unsigned>(time(0)));
                     Dinheiro -= apostaValor;
                     cout << "Certo, voce apostou " << apostaValor << " reais, agora voce vai poder puxar a alavanca e esperar o resultado. Vou puxa-la por ti." << endl;
+                    Sleep(800);
                     for (i=0;i<3;i++) {
                         cout << "Simbolos sorteados: ";
+                        Sleep(500);
                         for (j=0;j<3;j++) {
                             s[j] = Simbolos[rand() % Simbolos.size()];
                             cout << s[j] << " ";
@@ -230,22 +269,29 @@ int main() {
                         cout << endl; 
                         if (s[0]==s[1] && s[0]==s[2]) {                                   //se os tres simbolos forem iguais, isto acontece
                             Condicionador = true;
-                            cout << "Que grande sorte! Voce conseguiu tres simbolos iguais! Seu premio e o dobro do que foi apostado!" << endl;      
-                            cout << "Dinheiro ganho = " << apostaValor * 2 << endl;                                         
+                            cout << "Que grande sorte! Voce conseguiu tres simbolos iguais! Seu premio e o dobro do que foi apostado!" << endl; 
+                            Sleep(500);     
+                            cout << "Dinheiro ganho = " << apostaValor * 2 << endl;         
+                            Sleep(750);                                
                             Dinheiro = Dinheiro + (apostaValor * 2);
                         } else if (s[0]==s[1] && s[0]!=s[2]) {                            //se pelo menos dois simbolos forem iguais
                             Condicionador = true;
                             cout << "Parece que voce conseguiu dois simbolos iguais! Seu premio e o valor apostado mais metade dele mesmo!" << endl;
+                            Sleep(500);
                             cout << "Dinheiro ganho = " << apostaValor + (apostaValor * 0.5) << endl;
+                            Sleep(750);
                             Dinheiro = Dinheiro + (apostaValor + (apostaValor * 0.5));
                         } else if (s[0]!=s[1] && s[0]==s[2]) {                            //se pelo menos dois simbolos forem iguais
                             Condicionador = true;
                             cout << "Parece que voce conseguiu dois simbolos iguais! Seu premio e o valor apostado mais metade dele mesmo!" << endl;
+                            Sleep(500);
                             cout << "Dinheiro ganho = " << apostaValor + (apostaValor * 0.5) << endl;
+                            Sleep(750);
                             Dinheiro = Dinheiro + (apostaValor + (apostaValor * 0.5));
                         }
                         if (Condicionador==false) {                                       //se nem um for igual
                             cout << "Que ma sorte! Parece que voce nao conseguiu nem um simbolo igual se quer. Na proxima com certeza voce consegue!" << endl;
+                            Sleep(500);
                         }
                         if (i==1 || i==0) {                                                     //pergunta para não começar instantaneamente a segunda/terceira tentativa
                             if (i==0) {
@@ -257,6 +303,7 @@ int main() {
                             cin >> R;
                             if (R[0]=='n' || R[0]=='N') {
                                 cout << "Ok, vamos cancelar as tentativas." << endl;
+                                Sleep(500);
                                 break;
                             }
                             cout << endl;
@@ -264,12 +311,14 @@ int main() {
                     }                                               //terminação do terceiro "for"
                 }                                                //terminação da terceira condição de valor da aposta
 
-                if (apostaValor>=51 && apostaValor<=100) {
+                if (apostaValor==60) {
                     srand(static_cast<unsigned>(time(0)));
                     Dinheiro -= apostaValor;
                     cout << "Certo, voce apostou " << apostaValor << " reais, agora voce vai poder puxar a alavanca e esperar o resultado. Vou puxa-la por ti." << endl;
+                    Sleep(800);
                     for (i=0;i<4;i++) {
                         cout << "Simbolos sorteados: ";
+                        Sleep(500);
                         for (j=0;j<3;j++) {
                             s[j] = Simbolos[rand() % Simbolos.size()];
                             cout << s[j] << " ";
@@ -277,22 +326,29 @@ int main() {
                         cout << endl; 
                         if (s[0]==s[1] && s[0]==s[2]) {                                   //se os tres simbolos forem iguais, isto acontece
                             Condicionador = true;
-                            cout << "Que grande sorte! Voce conseguiu tres simbolos iguais! Seu premio e o dobro do que foi apostado!" << endl;      
-                            cout << "Dinheiro ganho = " << apostaValor * 2 << endl;                                         
+                            cout << "Que grande sorte! Voce conseguiu tres simbolos iguais! Seu premio e o dobro do que foi apostado!" << endl; 
+                            Sleep(500);     
+                            cout << "Dinheiro ganho = " << apostaValor * 2 << endl;
+                            Sleep(750);                                         
                             Dinheiro = Dinheiro + (apostaValor * 2);
                         } else if (s[0]==s[1] && s[0]!=s[2]) {                            //se pelo menos dois simbolos forem iguais
                             Condicionador = true;
                             cout << "Parece que voce conseguiu dois simbolos iguais! Seu premio e o valor apostado mais metade dele mesmo!" << endl;
+                            Sleep(500);
                             cout << "Dinheiro ganho = " << apostaValor + (apostaValor * 0.5) << endl;
+                            Sleep(750);
                             Dinheiro = Dinheiro + (apostaValor + (apostaValor * 0.5));
                         } else if (s[0]!=s[1] && s[0]==s[2]) {                            //se pelo menos dois simbolos forem iguais
                             Condicionador = true;
                             cout << "Parece que voce conseguiu dois simbolos iguais! Seu premio e o valor apostado mais metade dele mesmo!" << endl;
+                            Sleep(500);
                             cout << "Dinheiro ganho = " << apostaValor + (apostaValor * 0.5) << endl;
+                            Sleep(750);
                             Dinheiro = Dinheiro + (apostaValor + (apostaValor * 0.5));
                         }
                         if (Condicionador==false) {                                       //se nem um for igual
                             cout << "Que ma sorte! Parece que voce nao conseguiu nem um simbolo igual se quer. Na proxima com certeza voce consegue!" << endl;
+                            Sleep(500);
                         }
                         if (i==2 || i==1 || i==0) {                                               //pergunta para não começar instantaneamente a segunda/terceira/quara tentativa
                             if (i==0) {
@@ -304,6 +360,7 @@ int main() {
                             cin >> R;
                             if (R[0]=='n' || R[0]=='N') {
                                 cout << "Ok, vamos cancelar as tentativas." << endl;
+                                Sleep(500);
                                 break;
                             }
                             cout << endl;
@@ -311,12 +368,14 @@ int main() {
                     }                                               //terminação do quarto "for"
                 }                                                //terminação da quarta condição de valor da aposta
 
-                if (apostaValor>100) {
+                if (apostaValor>=100) {
                     srand(static_cast<unsigned>(time(0)));
                     Dinheiro -= apostaValor;                                                           //interação com o jogador
                     cout << "Certo, voce apostou " << apostaValor << " reais, agora voce vai poder puxar a alavanca e esperar o resultado. Vou puxa-la por ti." << endl;
+                    Sleep(600);
                     for (i=0;i<5;i++) {
                         cout << "Simbolos sorteados: ";
+                        Sleep(500);
                         for (j=0;j<3;j++) {
                             s[j] = Simbolos[rand() % Simbolos.size()];
                             cout << s[j] << " ";
@@ -324,22 +383,29 @@ int main() {
                         cout << endl; 
                         if (s[0]==s[1] && s[0]==s[2]) {                                   //se os tres simbolos forem iguais, isto acontece
                             Condicionador = true;
-                            cout << "Que grande sorte! Voce conseguiu tres simbolos iguais! Seu premio e o dobro do que foi apostado!" << endl;      
-                            cout << "Dinheiro ganho = " << apostaValor * 2 << endl;                                         
+                            cout << "Que grande sorte! Voce conseguiu tres simbolos iguais! Seu premio e o dobro do que foi apostado!" << endl;    
+                            Sleep(500);  
+                            cout << "Dinheiro ganho = " << apostaValor * 2 << endl;                    
+                            Sleep(750);                     
                             Dinheiro = Dinheiro + (apostaValor * 2);
                         } else if (s[0]==s[1] && s[0]!=s[2]) {                            //se pelo menos dois simbolos forem iguais
                             Condicionador = true;
                             cout << "Parece que voce conseguiu dois simbolos iguais! Seu premio e o valor apostado mais metade dele mesmo!" << endl;
+                            Sleep(500);
                             cout << "Dinheiro ganho = " << apostaValor + (apostaValor * 0.5) << endl;
+                            Sleep(750);
                             Dinheiro = Dinheiro + (apostaValor + (apostaValor * 0.5));
                         } else if (s[0]!=s[1] && s[0]==s[2]) {                            //se pelo menos dois simbolos forem iguais
                             Condicionador = true;
                             cout << "Parece que voce conseguiu dois simbolos iguais! Seu premio e o valor apostado mais metade dele mesmo!" << endl;
+                            Sleep(500);
                             cout << "Dinheiro ganho = " << apostaValor + (apostaValor * 0.5) << endl;
+                            Sleep(750);
                             Dinheiro = Dinheiro + (apostaValor + (apostaValor * 0.5));
                         }
                         if (Condicionador==false) {                                       //se nem um for igual
                             cout << "Que ma sorte! Parece que voce nao conseguiu nem um simbolo igual se quer. Na proxima com certeza voce consegue!" << endl;
+                            Sleep(800);
                         }
                         if (i==3 || i==2 ||i==1 || i==0) {                                                     //pergunta para não começar instantaneamente a próxima tentativa
                             if (i==0) {                                                                       
@@ -351,6 +417,7 @@ int main() {
                             cin >> R;
                             if (R[0]=='n' || R[0]=='N') {
                                 cout << "Ok, vamos cancelar as tentativas." << endl;
+                                Sleep(500);
                                 break;
                             }
                             cout << endl;
@@ -361,7 +428,16 @@ int main() {
                 if (apostaValor==0) {                     //condição de desistência
                     cout << "Voce escolheu desistir do jogo. Voltando ao menu principal." << endl;
                     Contador +=1;
+                    Sleep(500);
                     break;
+                }
+
+                if (apostaValor<10 || apostaValor>10 && apostaValor<20 || apostaValor>20 && apostaValor<40 || apostaValor>40 && apostaValor<100 ) {
+                    cout << "Digite um valor valido camarada." << endl;
+                    Sleep(500);
+                    cout << "Qual vai ser o valor da sua aposta? "; 
+                    cin >> apostaValor;
+                    Sleep(500);
                 }
 
             } while (apostaValor!=0);                         //condição da função "do"
@@ -371,23 +447,34 @@ int main() {
         case 3: 
             if (Dinheiro<15) {
                 cout << "Desculpa, mas voce nao tem dinheiro para poder realizar essa acao." << endl;                //Caso o jogador não tenha dinheiro para pagar a entrada
+                Sleep(500);
                 break;
+            } else if (Dinheiro<=0) {
+                cout << "GAME OVER! Voce ficou sem dinheiro para apostar!" << endl;
+                Sleep(500);
+                return 0;
             }
             Dinheiro -= 15;
             apostaValor = 0; vencedor = -1; vencedorCorrida = false; 
             srand(time(NULL));
             cout << "-15 reais." << endl;
             cout << "Boa noite " << Nome << "! Esta e uma corrida de cavalos. Aqui voce apostara no cavalo que voce acha que vai ganhar." << endl;
+            Sleep(1150);
             cout << "Caso seu cavalo ganhe, teu dinheiro apostado sera dobrado. Senao, voce so perdera seu dinheiro mesmo." << endl;
+            Sleep(1000);
             cout << endl << "Qual vai ser o seu cavalo? (1, 2, 3 ou 4) ";
             cin >> escolhaCavalo;
+            Sleep(500);
             cout << endl << "Quanto sera apostado nele? ";
             cin >> apostaValor;
+            Sleep(650);
             if (apostaValor>Dinheiro) {
                 do {
                     cout << "O senhor nao possui esse dinheiro para apostar." << endl;
+                    Sleep(750);
                     cout << "Quanto sera apostado nele? ";
                     cin >> apostaValor;
+                    Sleep(250);
                 } while (apostaValor>0 );
             } else {
                 Dinheiro -= apostaValor;
@@ -424,9 +511,11 @@ int main() {
             if (vencedor+1==escolhaCavalo) {
                 apostaValor = apostaValor * 2;
                 Dinheiro = Dinheiro + apostaValor;
-                cout << "Voce ganhou, parabens! Sua aposta foi dobrada e devolvida ao seu bolso." << endl;                        
+                cout << "Voce ganhou, parabens! Sua aposta foi dobrada e devolvida ao seu bolso." << endl;   
+                Sleep(500);                     
             } else {
                 cout << "Bom, nao da para esperar que va ganhar todas ne?" << endl;
+                Sleep(500);
             }
             break;                                                                   //final case 3
 
@@ -438,13 +527,19 @@ int main() {
             Dinheiro -= 50;
             cout << "-50 reais." << endl;
             cout << "Bem vindo a Roleta Russa! Nesse jogo, o programa ira gerar um numero aleatorio de 1 a 6 e voce tem que escolher entre atirar em si mesmo ou engatilhar a arma e atirar" << endl;
+            Sleep(1000);
             cout << "Voce comeca com 3 vidas, cada vez q tu atirar em si mesmo e for verdadeira, voce perde uma vida.";
+            Sleep(750);
             cout << " Explicacoes a parte, vamos comecar." << endl;
+            Sleep(500);
             cout << endl << "Voce escolhe puxar o gatilho ou engatilhar a arma (A ou B).";
+            Sleep(500);
             cout << endl << "Caso deseja sair, digite 'C' para voltar, sem devolucao do valor de entrada. ";
+            Sleep(750);
             cin >> atirarArmar;
             if (atirarArmar=='C') {
                 cout << "Retornando ao menu principal." << endl;             //opção de desistência
+                Sleep(1000);
                 break;
             }
             srand(time(NULL));
@@ -455,64 +550,83 @@ int main() {
                     cout << endl <<"Voce escolhe atirar direto ou engatilhar (A ou B)? ";                 //opção de atirar ou engatilhar antes de atirar
                     cin >> atirarArmar;
                     cout << endl;
+                    Sleep(750);
                     if (atirarArmar=='A' || atirarArmar=='a') {                               //opção de atirar no seco
                         if (revolver[i]==true) {
                             cout << "Ouch! Voce perdeu uma vida!" << endl;
                             VidaUsuario--;
+                            Sleep(250);
                             cout << "Vida restante do jogador: " << VidaUsuario << endl;
                             i = i*0 + 6;
                             revolver[girarTambor] = false;
+                            Sleep(500);
                             cout << "Coloquei a bala aleatoriamente e girei o tambor." << endl;
+                            Sleep(1000);
                         } else {
                             cout << "Ok, voce sobreviveu, minha vez." << endl;
+                            Sleep(500);
                         }
                     }
                     if (atirarArmar=='B' || atirarArmar=='b') {                               //opção de engatilhar antes de atirar
                         if (revolver[i+1]==true) {
                             cout << "OUCH! Nao deu muita sorte nessa ein!" << endl;
                             VidaUsuario--;
+                            Sleep(500);
                             cout << "Vida restante do jogador: " << VidaUsuario << endl;
                             i = i*0 + 6;
                             revolver[girarTambor] = false;
+                            Sleep(500);
                             cout << "Coloquei a bala aleatoriamente e girei o tambor." << endl;
+                            Sleep(1000);
                         } else {
                             cout << "Sortudo maldito! Minha vez." << endl;
+                            Sleep(500);
                         }
                     }
 
-                    escolhaBot = rand() % 2;                                  //randomização de escolha do bot
+                    escolhaBot = rand() % 2;                                  //randomização de escolha do bot entre 0 e 1
                     if (escolhaBot==0) {
                         cout << endl << "**APERTA O GATILHO**" << endl;
                         if (revolver[i+1]==true) {
                             cout << "**BANG** AI CACETE, sorte sua!" << endl;
                             VidaBot--; 
+                            Sleep(500);
                             cout << "Vida restante da casa: " << VidaBot << endl;
                             i = i*0 + 6;                                              //Caso ele escolha atirar
                             revolver[girarTambor] = false;
+                            Sleep(500);
                             cout << "Coloquei a bala aleatoriamente e girei o tambor." << endl;
+                            Sleep(1000);
                         } else {
                             cout << "Ufa! sua vez." << endl;
+                            Sleep(500);
                         }
                     } else if (escolhaBot==1) {
                         cout << endl << "**ENGATILHA O REVOLVER**" << endl;
                         if (revolver[i+2]==true) {
                             cout << "**BANG** AAAAAAH! CARALHO!" << endl;
                             VidaBot--;
+                            Sleep(500);
                             cout << "Vida restante da casa: " << VidaBot << endl;
                             i = i*0 + 6;                                             //Caso ele escolha engatilhar
                             revolver[girarTambor] = false;
+                            Sleep(500);
                             cout << "Coloquei a bala aleatoriamente e girei o tambor." << endl;
+                            Sleep(1000);
                         } else {
                             cout << "Meu cu chegou a passar nem wi-fi kkkkkk" << endl;
+                            Sleep(500);
                         }
                     }
                     
                     if (VidaUsuario==0) {
-                        cout << "Que pena, voce morreu, perdeste 25 reais" << endl;
+                        cout << "Que pena, voce morreu seu but, perdeste 25 reais" << endl;
                         Dinheiro = Dinheiro - 25;                                        //se o jogador perde
+                        Sleep(500);
                     } else if (VidaBot==0) {
                         cout << "Droga! Perdi para um palerma como voce. Parabens, voce triplicou seu valor de entrada" << endl;
                         Dinheiro = Dinheiro + (Dinheiro * 3);                           //se o jogador ganhar
+                        Sleep(500);
                     }
                 }
             }
@@ -526,7 +640,8 @@ int main() {
             break;
         } else if (OP==8) {
             cout << "Saindo do jogo..." << endl;                           //apenas uma interação básica com o usuário
-            break;
+            Sleep(1250);
+            return 0;
         }
         break;
        }         //switch fecha-chave
