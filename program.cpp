@@ -10,7 +10,6 @@ using namespace std;
 const int Linhas = 4; const int Colunas = 8;            //variáveis para o void
 
 void mostrarCorrida(bool corridaCavalo[Linhas][Colunas]) {                        //função secundária tipo void para que eu possa trabalhar na parte visual da corrida 
-    cout << "APROVEITEM O ESPETACULO!" << endl;
     for (int i=0; i<Linhas; i++) {                                           //sim, precisa declarar o i denovo
         cout << "Cavalo " << i + 1 << " | ";
         for (int j=0; j<Colunas; ++j) {
@@ -25,7 +24,7 @@ void mostrarCorrida(bool corridaCavalo[Linhas][Colunas]) {                      
 int main() {
     int OP,i,j,NumerosSorteados[6],NumerosEscolhidos[6],Contador,girarTambor, VidaUsuario=3, VidaBot=3, escolhaBot, escolhaCavalo; 
     //variável de opção e opção 2, variável para função (for), vetor tipo Int para armazenar números, vida do usuário e do robô, variável de escolha do robô, variável de escolha do cavalo
-    int progresso[Linhas] = { 0 }, vencedor = -1;
+    int progresso[Linhas] = { 0 }, vencedor = -1, Palpite = 0, NumeroEscolhido;
     char Nome[30], s[3], R[3], atirarArmar; //vetor tipo Char para colocar seu nome, vetor para armazenar símbolos, vetor para armazenar resposta,
     float Dinheiro, apostaValor; //variável que representa o dinheiro inicial do jogador
     bool Condicionador = false, vencedorCorrida = false;   //pra aplicar uma condição de verdade ou falso  
@@ -43,16 +42,16 @@ int main() {
     cin.getline(Nome,30);
     Sleep(1000);
     cout << "Ola " << Nome << "! Bem vindo a Diversao Virtual! Voce tem 100 reais para comecar sua diversao." << endl;
-    Sleep(1500);
+    Sleep(1250);
 
     do {                                                                                       //Menu Principal
        cout << "========= Diversao Virtual =========" << endl;  
-       cout << "1. MegaSena (RS20 para jogar)" << endl;                                    //MegaSena de 1 a 60 
-       cout << "2. Alavanca da Sorte (RS10 de entrada para jogar)" << endl;                  //Slot Machine 
-       cout << "3. Corrida de Cavalo (RS15 de entrada para jogar)" << endl;                    //Corrida de Cavalos, você aposta no que achar ser o que vai chegar em primeiro
-       cout << "4. " << endl;
-       cout << "5. " << endl;
-       cout << "6. " << endl;
+       cout << "1. MegaSena (RS20 de entreda)" << endl;                          //MegaSena de 1 a 60 
+       cout << "2. Alavanca da Sorte (RS10 de entrada)" << endl;                  //Slot Machine 
+       cout << "3. Corrida de Cavalo (RS15 de entrada)" << endl;                   //Corrida de Cavalos, você aposta no que achar ser o que vai chegar em primeiro
+       cout << "4. Jogo da Adivinhacao (RS20 de entrada)" << endl;                  //Autoexplicativo
+       cout << "5. EM PROGRESSO!!!! " << endl;
+       cout << "6. EM PROGRESSO!!!! " << endl;
        cout << "7. Roleta Russa (RS50 para jogar)" << endl;                                //Roleta Russa com chance de triplicar o valor de entrada
        cout << "8. Sair" << endl;  
        if (Contador==0) {
@@ -432,7 +431,7 @@ int main() {
                     break;
                 }
 
-                if (apostaValor<10 || apostaValor>10 && apostaValor<20 || apostaValor>20 && apostaValor<40 || apostaValor>40 && apostaValor<100 ) {
+                if (apostaValor<10 || (apostaValor>10 && apostaValor<20) || (apostaValor>20 && apostaValor<40) || (apostaValor>40 && apostaValor<100) ) {
                     cout << "Digite um valor valido camarada." << endl;
                     Sleep(500);
                     cout << "Qual vai ser o valor da sua aposta? "; 
@@ -481,6 +480,7 @@ int main() {
             }
 
             cout << endl << "Apostas feitas, vamos dar inicio a corrida. 3, 2, 1. **BANG**" << endl;
+            cout << "APROVEITEM O ESPETACULO!" << endl;
             srand(time(NULL) + rand());                                //evita que o mesmo cavalo ganhe
 
             for (int i = 0; i < Linhas; i++) {
@@ -518,6 +518,53 @@ int main() {
                 Sleep(500);
             }
             break;                                                                   //final case 3
+        
+        case 4:
+            VidaUsuario = 5;
+            if (Dinheiro<20) {
+                cout << "Desculpa, mas voce nao tem dinheiro para poder realizar essa acao." << endl;
+                Sleep(500);
+                break;
+            }
+            Dinheiro -= 20;
+            cout << "-20 reais" << endl;
+            cout << "As regras sao simples, voce tem 5 chances de acertar o numero que a maquina esta pensando entre 1 e 20." << endl;
+            Sleep(1333);
+            cout << "Se voce acertar, ganha o dobro do valor da entrada." << endl;
+            Sleep(888);
+            cout << "Boa sorte, voce vai precisar." << endl;
+            cout << endl;
+            Sleep(200);
+
+            srand(time(0));
+            NumeroEscolhido = rand() % 20 + 1;
+            for (i=0;i<=5;i++) {
+                if (VidaUsuario==0) {
+                    cout << "Voce ficou sem palpites!" << endl;
+                    Sleep(500);
+                    cout << "O numero certo era: " << NumeroEscolhido << endl;
+                    Sleep(100);
+                    break;
+                }
+                cout << "Qual vai ser seu " << i+1 << "o palpite.";
+                cin >> Palpite;
+                if (Palpite==NumeroEscolhido) {
+                    Sleep(1000);
+                    cout << "Parabens! Voce acertou o numero!" << endl;
+                    Sleep(300);
+                    break;
+                } else {
+                    Sleep(1000);
+                    cout << "Voce errou." << endl;
+                    VidaUsuario = VidaUsuario - 1;
+                    Sleep(300);
+                    cout << "-1 de Vida" << endl;
+                    Sleep(500);
+                    cout << "Vida atual e de: " << VidaUsuario << endl;
+                    cout << endl;
+                }
+            }
+            break;
 
         case 7: 
             if (Dinheiro<50) {
