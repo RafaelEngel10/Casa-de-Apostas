@@ -3,7 +3,7 @@
 #include <vector>
 #include <cstdlib>
 #include <stdio.h>
-#include <string.h>                                         //sem uso grande por enquanto
+#include <string>                                         //sem uso grande por enquanto
 #include <windows.h>                                       //para ter a função Sleep()
 using namespace std;
 
@@ -39,9 +39,14 @@ int main() {
     };
 
     cout << "Antes de jogar, por favor digite seu nome: ";
-    cin.getline(Nome,30);
+    cin.getline(Nome, 30);
     Sleep(1000);
-    cout << "Ola " << Nome << "! Bem vindo a Diversao Virtual! Voce tem 100 reais para comecar sua diversao." << endl;
+    if (strcmp(Nome, "adm.Engel09") == 0) {
+        cout << "Seja bem vindo chefe!" << endl;
+        Dinheiro = 999000;
+    } else {
+        cout << "Ola " << Nome << "! Bem vindo a Diversao Virtual! Voce tem 100 reais para comecar sua diversao." << endl;
+    }
     Sleep(1250);
 
     do {                                                                                       //Menu Principal
