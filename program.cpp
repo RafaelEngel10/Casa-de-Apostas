@@ -25,7 +25,7 @@ int main() {
     int OP,i,j,NumerosSorteados[6],NumerosEscolhidos[6],Contador,girarTambor, VidaUsuario=3, VidaBot=3, escolhaBot, escolhaCavalo; 
     //variável de opção e opção 2, variável para função (for), vetor tipo Int para armazenar números, vida do usuário e do robô, variável de escolha do robô, variável de escolha do cavalo
     int progresso[Linhas] = { 0 }, vencedor = -1, Palpite = 0, NumeroEscolhido;
-    char Nome[30], s[3], R[3], atirarArmar; //vetor tipo Char para colocar seu nome, vetor para armazenar símbolos, vetor para armazenar resposta,
+    char Nome[30], s[3], R[3], atirarArmar, Resposta[3]; //vetor tipo Char para colocar seu nome, vetor para armazenar símbolos, vetor para armazenar resposta,
     float Dinheiro, apostaValor; //variável que representa o dinheiro inicial do jogador
     bool Condicionador = false, vencedorCorrida = false;   //pra aplicar uma condição de verdade ou falso  
     OP=0; Dinheiro=100; Contador=0;
@@ -568,7 +568,7 @@ int main() {
             cout << "-50 reais." << endl;
             cout << "Bem vindo a Roleta Russa! Nesse jogo, o programa ira gerar um numero aleatorio de 1 a 6 e voce tem que escolher entre atirar em si mesmo ou engatilhar a arma e atirar" << endl;
             Sleep(1000);
-            cout << "Voce comeca com 3 vidas, cada vez q tu atirar em si mesmo e for verdadeira, voce perde uma vida.";
+            cout << "Voce comeca com 3 vidas, cada vez que atirar-te em si mesmo e a bala for verdadeira, voce perde uma vida.";
             Sleep(750);
             cout << " Explicacoes a parte, vamos comecar." << endl;
             Sleep(500);
@@ -587,7 +587,7 @@ int main() {
                 girarTambor = rand() % 6;
                 revolver[girarTambor] = true;
                 for (i=0;i<6;i++) {
-                    cout << endl <<"Voce escolhe atirar direto ou engatilhar (A ou B)? ";                 //opção de atirar ou engatilhar antes de atirar
+                    cout << endl <<"Atirar(A) ou Engatilhar(B): ";                 //opção de atirar ou engatilhar antes de atirar
                     cin >> atirarArmar;
                     cout << endl;
                     Sleep(750);
