@@ -45,6 +45,7 @@ int main() {
     Sleep(1250);
 
     do {                                                                                       //Menu Principal
+       cout << endl; 
        cout << "========= Diversao Virtual =========" << endl;  
        cout << "1. MegaSena (RS20 de entreda)" << endl;                          //MegaSena de 1 a 60 
        cout << "2. Alavanca da Sorte (RS10 de entrada)" << endl;                  //Slot Machine 
@@ -387,22 +388,14 @@ int main() {
                             cout << "Dinheiro ganho = " << apostaValor * 2 << endl;                    
                             Sleep(750);                     
                             Dinheiro = Dinheiro + (apostaValor * 2);
-                        } else if (s[0]==s[1] && s[0]!=s[2]) {                            //se pelo menos dois simbolos forem iguais
+                        } else if (s[0]==s[1] && (s[0]!=s[2] && s[1]!=s[2])) {                            //se pelo menos dois simbolos forem iguais
                             Condicionador = true;
                             cout << "Parece que voce conseguiu dois simbolos iguais! Seu premio e o valor apostado mais metade dele mesmo!" << endl;
                             Sleep(500);
                             cout << "Dinheiro ganho = " << apostaValor + (apostaValor * 0.5) << endl;
                             Sleep(750);
                             Dinheiro = Dinheiro + (apostaValor + (apostaValor * 0.5));
-                        } else if (s[0]!=s[1] && s[0]==s[2]) {                            //se pelo menos dois simbolos forem iguais
-                            Condicionador = true;
-                            cout << "Parece que voce conseguiu dois simbolos iguais! Seu premio e o valor apostado mais metade dele mesmo!" << endl;
-                            Sleep(500);
-                            cout << "Dinheiro ganho = " << apostaValor + (apostaValor * 0.5) << endl;
-                            Sleep(750);
-                            Dinheiro = Dinheiro + (apostaValor + (apostaValor * 0.5));
-                        }
-                        if (Condicionador==false) {                                       //se nem um for igual
+                        } else if (Condicionador==false) {                                       //se nem um for igual
                             cout << "Que ma sorte! Parece que voce nao conseguiu nem um simbolo igual se quer. Na proxima com certeza voce consegue!" << endl;
                             Sleep(800);
                         }
@@ -546,7 +539,7 @@ int main() {
                     Sleep(100);
                     break;
                 }
-                cout << "Qual vai ser seu " << i+1 << "o palpite.";
+                cout << "Qual vai ser seu " << i+1 << "o palpite: ";
                 cin >> Palpite;
                 if (Palpite==NumeroEscolhido) {
                     Sleep(1000);
