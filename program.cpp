@@ -152,6 +152,7 @@ int main() {
             cout << "Cada valor tem um numero de vezes que voce pode puxar a alavanca, aqui vai uma tabela de precos com as jogadas." << endl;
             Sleep(500);
             do {                                                                          //começo do "do"
+                cout << endl;
                 cout << "========= Tabela de Valores =========" << endl;
                 cout << "10 reais = 1 jogada." << endl;
                 cout << "20 reais = 2 jogadas." << endl;
@@ -162,7 +163,8 @@ int main() {
                 cout << "=====================================" << endl;
                 Sleep(500);
                 cout << "Qual vai ser o valor da sua aposta? "; 
-                cin >> apostaValor; 
+                cin >> apostaValor;
+                cout << endl; 
                 if (apostaValor==10) {
                     srand(static_cast<unsigned>(time(0)));
                     Dinheiro -= apostaValor;                                     //interação simples com o jogador
@@ -181,7 +183,8 @@ int main() {
                             Condicionador = true;
                             cout << "Que grande sorte! Voce conseguiu tres simbolos iguais! Seu premio e o dobro do que foi apostado!" << endl;      
                             Sleep(500);
-                            cout << "Dinheiro ganho = " << apostaValor * 2 << endl;   
+                            cout << "Dinheiro ganho = " << apostaValor * 2 << endl;
+                            cout << endl;   
                             Sleep(750);                                      
                             Dinheiro = Dinheiro + (apostaValor * 2);
                         } else if (s[0]==s[1] && s[0]!=s[2] && s[1]==s[2]) {                            //se pelo menos dois simbolos forem iguais
@@ -189,6 +192,7 @@ int main() {
                             cout << "Parece que voce conseguiu dois simbolos iguais! Seu premio e o valor apostado mais metade dele mesmo!" << endl;
                             Sleep(500);
                             cout << "Dinheiro ganho = " << apostaValor + (apostaValor * 0.5) << endl;
+                            cout << endl;
                             Sleep(750);
                             Dinheiro = Dinheiro + (apostaValor + (apostaValor * 0.5));
                         } else if (s[0]==s[2] && s[0]!=s[1] && s[1]!=s[2]) {                            //se pelo menos dois simbolos forem iguais
@@ -196,13 +200,15 @@ int main() {
                             cout << "Parece que voce conseguiu dois simbolos iguais! Seu premio e o valor apostado mais metade dele mesmo!" << endl;
                             Sleep(500);
                             cout << "Dinheiro ganho = " << apostaValor + (apostaValor * 0.5) << endl;
+                            cout << endl;
                             Sleep(750);
                             Dinheiro = Dinheiro + (apostaValor + (apostaValor * 0.5));
-                        } else if (s[1]==s[2] && s[2]!=s[0] && s[1]!=s[2]) {                            //se pelo menos dois simbolos forem iguais
+                        } else if (s[1]==s[2] && s[2]!=s[0] && s[0]!=s[1]) {                            //se pelo menos dois simbolos forem iguais
                             Condicionador = true; 
                             cout << "Parece que voce conseguiu dois simbolos iguais! Seu premio e o valor apostado mais metade dele mesmo!" << endl;
                             Sleep(500);
                             cout << "Dinheiro ganho = " << apostaValor + (apostaValor * 0.5) << endl;
+                            cout << endl;
                             Sleep(750);
                             Dinheiro = Dinheiro + (apostaValor + (apostaValor * 0.5));
                         } else {                                       //se nem um for igual
@@ -229,7 +235,8 @@ int main() {
                             Condicionador = true;
                             cout << "Que grande sorte! Voce conseguiu tres simbolos iguais! Seu premio e o dobro do que foi apostado!" << endl;  
                             Sleep(500);    
-                            cout << "Dinheiro ganho = " << apostaValor * 2 << endl;   
+                            cout << "Dinheiro ganho = " << apostaValor * 2 << endl;  
+                            cout << endl; 
                             Sleep(750);                                      
                             Dinheiro = Dinheiro + (apostaValor * 2);
                         } else if (s[0]==s[1] && s[0]!=s[2]) {                            //se pelo menos dois simbolos forem iguais
@@ -237,6 +244,7 @@ int main() {
                             cout << "Parece que voce conseguiu dois simbolos iguais! Seu premio e o valor apostado mais metade dele mesmo!" << endl;
                             Sleep(500);
                             cout << "Dinheiro ganho = " << apostaValor + (apostaValor * 0.5) << endl;
+                            cout << endl;
                             Sleep(750);
                             Dinheiro = Dinheiro + (apostaValor + (apostaValor * 0.5));
                         } else if (s[0]!=s[1] && s[0]==s[2]) {                            //se pelo menos dois simbolos forem iguais
@@ -244,6 +252,7 @@ int main() {
                             cout << "Parece que voce conseguiu dois simbolos iguais! Seu premio e o valor apostado mais metade dele mesmo!" << endl;
                             Sleep(500);
                             cout << "Dinheiro ganho = " << apostaValor + (apostaValor * 0.5) << endl;
+                            cout << endl;
                             Sleep(750);
                             Dinheiro = Dinheiro + (apostaValor + (apostaValor * 0.5));
                         }
@@ -276,7 +285,8 @@ int main() {
                             Condicionador = true;
                             cout << "Que grande sorte! Voce conseguiu tres simbolos iguais! Seu premio e o dobro do que foi apostado!" << endl; 
                             Sleep(500);     
-                            cout << "Dinheiro ganho = " << apostaValor * 2 << endl;         
+                            cout << "Dinheiro ganho = " << apostaValor * 2 << endl;
+                            cout << endl;         
                             Sleep(750);                                
                             Dinheiro = Dinheiro + (apostaValor * 2);
                         } else if (s[0]==s[1] && s[0]!=s[2]) {                            //se pelo menos dois simbolos forem iguais
@@ -284,6 +294,7 @@ int main() {
                             cout << "Parece que voce conseguiu dois simbolos iguais! Seu premio e o valor apostado mais metade dele mesmo!" << endl;
                             Sleep(500);
                             cout << "Dinheiro ganho = " << apostaValor + (apostaValor * 0.5) << endl;
+                            cout << endl;
                             Sleep(750);
                             Dinheiro = Dinheiro + (apostaValor + (apostaValor * 0.5));
                         } else if (s[0]!=s[1] && s[0]==s[2]) {                            //se pelo menos dois simbolos forem iguais
@@ -291,6 +302,7 @@ int main() {
                             cout << "Parece que voce conseguiu dois simbolos iguais! Seu premio e o valor apostado mais metade dele mesmo!" << endl;
                             Sleep(500);
                             cout << "Dinheiro ganho = " << apostaValor + (apostaValor * 0.5) << endl;
+                            cout << endl;
                             Sleep(750);
                             Dinheiro = Dinheiro + (apostaValor + (apostaValor * 0.5));
                         }
@@ -334,6 +346,7 @@ int main() {
                             cout << "Que grande sorte! Voce conseguiu tres simbolos iguais! Seu premio e o dobro do que foi apostado!" << endl; 
                             Sleep(500);     
                             cout << "Dinheiro ganho = " << apostaValor * 2 << endl;
+                            cout << endl;
                             Sleep(750);                                         
                             Dinheiro = Dinheiro + (apostaValor * 2);
                         } else if (s[0]==s[1] && s[0]!=s[2]) {                            //se pelo menos dois simbolos forem iguais
@@ -341,6 +354,7 @@ int main() {
                             cout << "Parece que voce conseguiu dois simbolos iguais! Seu premio e o valor apostado mais metade dele mesmo!" << endl;
                             Sleep(500);
                             cout << "Dinheiro ganho = " << apostaValor + (apostaValor * 0.5) << endl;
+                            cout << endl;
                             Sleep(750);
                             Dinheiro = Dinheiro + (apostaValor + (apostaValor * 0.5));
                         } else if (s[0]!=s[1] && s[0]==s[2]) {                            //se pelo menos dois simbolos forem iguais
@@ -348,6 +362,7 @@ int main() {
                             cout << "Parece que voce conseguiu dois simbolos iguais! Seu premio e o valor apostado mais metade dele mesmo!" << endl;
                             Sleep(500);
                             cout << "Dinheiro ganho = " << apostaValor + (apostaValor * 0.5) << endl;
+                            cout << endl;
                             Sleep(750);
                             Dinheiro = Dinheiro + (apostaValor + (apostaValor * 0.5));
                         }
@@ -390,7 +405,8 @@ int main() {
                             Condicionador = true;
                             cout << "Que grande sorte! Voce conseguiu tres simbolos iguais! Seu premio e o dobro do que foi apostado!" << endl;    
                             Sleep(500);  
-                            cout << "Dinheiro ganho = " << apostaValor * 2 << endl;                    
+                            cout << "Dinheiro ganho = " << apostaValor * 2 << endl;
+                            cout << endl;                    
                             Sleep(750);                     
                             Dinheiro = Dinheiro + (apostaValor * 2);
                         } else if (s[0]==s[1] && (s[0]!=s[2] && s[1]!=s[2])) {                            //se pelo menos dois simbolos forem iguais
@@ -398,6 +414,7 @@ int main() {
                             cout << "Parece que voce conseguiu dois simbolos iguais! Seu premio e o valor apostado mais metade dele mesmo!" << endl;
                             Sleep(500);
                             cout << "Dinheiro ganho = " << apostaValor + (apostaValor * 0.5) << endl;
+                            cout << endl;
                             Sleep(750);
                             Dinheiro = Dinheiro + (apostaValor + (apostaValor * 0.5));
                         } else if (Condicionador==false) {                                       //se nem um for igual
