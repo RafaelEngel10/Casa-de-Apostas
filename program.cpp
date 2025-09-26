@@ -3,11 +3,28 @@
 #include <vector>
 #include <cstdlib>
 #include <stdio.h>
+#include <stdlib.h>
+#include <unordered_map>
 #include <string>                                         //sem uso grande por enquanto
 #include <windows.h>                                       //para ter a função Sleep()
 using namespace std;
 
 const int Linhas = 4; const int Colunas = 8;            //variáveis para o void
+
+int maiorRepeticao(const int vetorArmazenador[], int tamanho) {
+    unordered_map<int, int> contagem;  // dicionário valor -> quantidade
+    int maxRep = 0;
+
+    for (int i = 0; i < tamanho; i++) {
+        contagem[vetorArmazenador[i]]++;            // conta cada número
+        if (contagem[vetorArmazenador[i]] > maxRep) {
+            maxRep = contagem[vetorArmazenador[i]];
+        }
+    }
+
+    // Se o maior grupo for menor que 2, não conta como repetição
+    return (maxRep >= 2 ? maxRep : 0);
+}
 
 void mostrarCorrida(bool corridaCavalo[Linhas][Colunas]) {                        //função secundária tipo void para que eu possa trabalhar na parte visual da corrida 
     for (int i=0; i<Linhas; i++) {                                           //sim, precisa declarar o i denovo
@@ -22,13 +39,16 @@ void mostrarCorrida(bool corridaCavalo[Linhas][Colunas]) {                      
 }
 
 int main() {
+    setlocale(LC_ALL, "Portuguese");                     //para aceitar acentuação
     int OP,i,j,NumerosSorteados[6],NumerosEscolhidos[6],Contador,girarTambor, VidaUsuario=3, VidaBot=3, escolhaBot, escolhaCavalo; 
     //variável de opção e opção 2, variável para função (for), vetor tipo Int para armazenar números, vida do usuário e do robô, variável de escolha do robô, variável de escolha do cavalo
-    int progresso[Linhas] = { 0 }, vencedor = -1, Palpite = 0, NumeroEscolhido;
+    int progresso[Linhas] = { 0 }, vencedor = -1, Palpite = 0, NumeroEscolhido, jogadas, numeroAleatorio, palpiteAuxiliar = 0;
+    int vetorArmazenador[5] = { 0 }, n = sizeof(vetorArmazenador) / sizeof(vetorArmazenador[0]);
     char Nome[30], s[3], R[3], atirarArmar, Resposta[3]; //vetor tipo Char para colocar seu nome, vetor para armazenar símbolos, vetor para armazenar resposta,
     float Dinheiro, apostaValor; //variável que representa o dinheiro inicial do jogador
     bool Condicionador = false, vencedorCorrida = false;   //pra aplicar uma condição de verdade ou falso  
     OP=0; Dinheiro=100; Contador=0;
+    char megaSimbolo[165] = {'@','#','$','&','*','%','/','?','!','<','>','|','=','-', '_'};   //vetor gigante para mais simbolos da nova slot machine!
     vector<char> Simbolos = {'@','#','$','&','*','%','/','?','!'};                //vetor tipo char para armazenar símbolos (slot machine)
     bool revolver[6] = {false, false, false, false, false, false};                         //vetor tipo bool armazenando false em todas as posições
     bool corridaCavalo[4][8] = {
@@ -57,7 +77,7 @@ int main() {
        cout << "3. Corrida de Cavalo (RS15 de entrada)" << endl;                   //Corrida de Cavalos, você aposta no que achar ser o que vai chegar em primeiro
        cout << "4. Jogo da Adivinhacao (RS20 de entrada)" << endl;                  //Autoexplicativo
        cout << "5. EM PROGRESSO!!!! " << endl;
-       cout << "6. EM PROGRESSO!!!! " << endl;
+       cout << "6. Alavanca do Milhão (RS20 de entrada)" << endl;
        cout << "7. Roleta Russa (RS50 para jogar)" << endl;                                //Roleta Russa com chance de triplicar o valor de entrada
        cout << "8. Sair" << endl;  
        if (Contador==0) {
@@ -84,6 +104,7 @@ int main() {
             cout << "-20 reais." << endl;
             Sleep(500);
             cout << "Boa noite " << Nome << "! Vou gerar 6 numeros diferentes e se voce tem que acertar pelo menos um deles." << endl;
+            cout << endl;
             srand(time(NULL));
             for (i=0;i<6;i++) {
                 NumerosSorteados[i] = rand()%60+1;                                       //Geração de 6 números aleatórios
@@ -580,6 +601,291 @@ int main() {
                 }
             }
             break;
+
+        case 6:
+            jogadas = 0;
+            Dinheiro -= 20;
+            if (Dinheiro < 20) {
+                cout << "Desculpa, mas voce nao tem dinheiro para poder realizar essa acao." << endl;
+                Sleep(500);
+                break;
+            } else if (Dinheiro<=0) {
+                cout << "GAME OVER! Voce ficou sem dinheiro para apostar!" << endl;
+                Sleep(500);
+                return 0;
+            }
+            cout << "-20 reais." << endl;
+            Sleep(250);
+            cout << "Bem vindo a Alavanca do Milhao " << Nome << "! Basta inserir uma aposta que desejar e caso venca, essa aposta volta para voce em triplo! Mas caso perca, a aposta fica com a gente." << endl;
+            Sleep(1000);
+            cout << "Vamos comecar!" << endl;
+            Sleep(500);
+            Palpite = 0;
+            do {
+                cout << endl;
+                cout << "======== Apostas =======" << endl;
+                cout << "10 reais = 1 jogada." << endl;
+                cout << "20 reais = 2 jogadas." << endl;
+                cout << "30 reais = 3 jogadas." << endl;
+                cout << "40 reais = 4 jogadas." << endl;
+                cout << "50+ reais = 5 jogadas." << endl;
+                cout << "========================" << endl;
+                cout << "Digite seu valor de aposta (0 para desistir): ";
+                cin >> Palpite;
+                if (Palpite==0) {
+                    cout << "Voce escolheu desistir do jogo. Voltando ao menu principal." << endl;                    //caso escolha desistir
+                    Contador +=1;
+                    Sleep(500);
+                    break;
+                }
+                if (Palpite > 50) {                                                                             //caso a aposta seja maior que 50
+                    cout << "Você terá 5 jogadas por apostar mais de 50 reais." << endl;
+                    jogadas = 5;
+                    palpiteAuxiliar += Palpite;
+                    Palpite = 50;
+                }
+                switch (Palpite) {
+                    case 10:
+                        srand(time(0));
+                        cout << "Voce apostou 10 reais e tera 1 jogada." << endl;
+                        cout << endl;
+                        jogadas = 1;
+                        for (i = 0; i < jogadas; i++) {
+                            for (j = 0; j < 5; j++) {
+                                vetorArmazenador[j] = rand() % 16;                  //gera 5 numeros aleatorios entre 0 e 15
+                                cout << megaSimbolo[vetorArmazenador[j]];      //mostra os simbolos correspondentes aos numeros gerados
+                                Sleep(300);
+                            }
+                            if (maiorRepeticao(vetorArmazenador, n) == 2) {
+                                cout << endl << "Parabens! Voce conseguiu dois simbolos iguais!" << endl;
+                                Sleep(500);
+                                cout << "Dinheiro ganho = " << Palpite * 2 << endl;
+                                cout << endl;
+                                Sleep(750);
+                                Dinheiro = Dinheiro + (Palpite * 2);
+                            } else if (maiorRepeticao(vetorArmazenador, n) == 3) {
+                                cout << endl << "Incrivel! Voce conseguiu tres simbolos iguais!" << endl;
+                                Sleep(500);
+                                cout << "Dinheiro ganho = " << Palpite * 3 << endl;
+                                cout << endl;
+                                Sleep(750);
+                                Dinheiro = Dinheiro + (Palpite * 3);
+                            } else if (maiorRepeticao(vetorArmazenador, n) == 4) {
+                                cout << endl << "Que grande sorte! Voce conseguiu quatro ou cinco simbolos iguais!" << endl;
+                                Sleep(500);
+                                cout << "Dinheiro ganho = " << Palpite * 4 << endl;
+                                cout << endl;
+                                Sleep(750);
+                                Dinheiro = Dinheiro + (Palpite * 4);
+                            } else if (maiorRepeticao(vetorArmazenador, n) == 5) {
+                                cout << endl << "FENOMENAL!!!!! Voce conseguiu os 5 símbolos iguais!!!! Parabens pelo seu dinheiro quinplificado!!" << endl;
+                                if (Palpite == 50 && palpiteAuxiliar > 50) {
+                                    Palpite = palpiteAuxiliar;
+                                }
+                                Palpite = Palpite * 5;
+                                Sleep(500);
+                            } else {
+                                cout << endl << "Que pena, voce nao conseguiu nem dois simbolos iguais. Tente novamente!" << endl;
+                                Sleep(500);
+                            }
+                            Sleep(2500);
+                            cout << endl;
+                        }
+                        break;
+                    case 20:
+                        srand(time(0));
+                        cout << "Voce apostou 20 reais e tera 2 jogadas." << endl;
+                        cout << endl;
+                        jogadas = 2;
+                        for (i = 0; i < jogadas; i++) {
+                            for ( j = 0; j < 5; j++) {
+                                vetorArmazenador[j] = rand() % 16;                  //gera 5 numeros aleatorios entre 0 e 15
+                                cout << megaSimbolo[vetorArmazenador[j]];      //mostra os simbolos correspondentes aos numeros gerados
+                                Sleep(300);
+                            }
+                            if (maiorRepeticao(vetorArmazenador, n) == 2) {
+                                cout << endl << "Parabens! Voce conseguiu dois simbolos iguais!" << endl;
+                                Sleep(500);
+                                cout << "Dinheiro ganho = " << Palpite * 2 << endl;
+                                cout << endl;
+                                Sleep(750);
+                                Dinheiro = Dinheiro + (Palpite * 2);
+                            } else if (maiorRepeticao(vetorArmazenador, n) == 3) {
+                                cout << endl << "Incrivel! Voce conseguiu tres simbolos iguais!" << endl;
+                                Sleep(500);
+                                cout << "Dinheiro ganho = " << Palpite * 3 << endl;
+                                cout << endl;
+                                Sleep(750);
+                                Dinheiro = Dinheiro + (Palpite * 3);
+                            } else if (maiorRepeticao(vetorArmazenador, n) == 4) {
+                                cout << endl << "Que grande sorte! Voce conseguiu quatro ou cinco simbolos iguais!" << endl;
+                                Sleep(500);
+                                cout << "Dinheiro ganho = " << Palpite * 4 << endl;
+                                cout << endl;
+                                Sleep(750);
+                                Dinheiro = Dinheiro + (Palpite * 4);
+                            } else if (maiorRepeticao(vetorArmazenador, n) == 5) {
+                                cout << endl << "FENOMENAL!!!!! Voce conseguiu os 5 símbolos iguais!!!! Parabens pelo seu dinheiro quinplificado!!" << endl;
+                                if (Palpite == 50 && palpiteAuxiliar > 50) {
+                                    Palpite = palpiteAuxiliar;
+                                }
+                                Palpite = Palpite * 5;
+                                Sleep(500);
+                            } else {
+                                cout << endl << "Que pena, voce nao conseguiu nem dois simbolos iguais. Tente novamente!" << endl;
+                                Sleep(500);
+                            }
+                            Sleep(2500);
+                            cout << endl;
+                        }
+                        break;
+                    case 30:
+                        srand(time(0));
+                        cout << "Voce apostou 30 reais e tera 3 jogadas." << endl;
+                        cout << endl;
+                        jogadas = 3;
+                        for (i = 0; i < jogadas; i++) {
+                            for ( j = 0; j < 5; j++) {
+                                vetorArmazenador[j] = rand() % 16;                  //gera 5 numeros aleatorios entre 0 e 15
+                                cout << megaSimbolo[vetorArmazenador[j]];      //mostra os simbolos correspondentes aos numeros gerados
+                                Sleep(300);
+                            }
+                            if (maiorRepeticao(vetorArmazenador, n) == 2) {
+                                cout << endl << "Parabens! Voce conseguiu dois simbolos iguais!" << endl;
+                                Sleep(500);
+                                cout << "Dinheiro ganho = " << Palpite * 2 << endl;
+                                cout << endl;
+                                Sleep(750);
+                                Dinheiro = Dinheiro + (Palpite * 2);
+                            } else if (maiorRepeticao(vetorArmazenador, n) == 3) {
+                                cout << endl << "Incrivel! Voce conseguiu tres simbolos iguais!" << endl;
+                                Sleep(500);
+                                cout << "Dinheiro ganho = " << Palpite * 3 << endl;
+                                cout << endl;
+                                Sleep(750);
+                                Dinheiro = Dinheiro + (Palpite * 3);
+                            } else if (maiorRepeticao(vetorArmazenador, n) == 4) {
+                                cout << endl << "Que grande sorte! Voce conseguiu quatro ou cinco simbolos iguais!" << endl;
+                                Sleep(500);
+                                cout << "Dinheiro ganho = " << Palpite * 4 << endl;
+                                cout << endl;
+                                Sleep(750);
+                                Dinheiro = Dinheiro + (Palpite * 4);
+                            } else if (maiorRepeticao(vetorArmazenador, n) == 5) {
+                                cout << endl << "FENOMENAL!!!!! Voce conseguiu os 5 símbolos iguais!!!! Parabens pelo seu dinheiro quinplificado!!" << endl;
+                                if (Palpite == 50 && palpiteAuxiliar > 50) {
+                                    Palpite = palpiteAuxiliar;
+                                }
+                                Palpite = Palpite * 5;
+                                Sleep(500);
+                            } else {
+                                cout << endl << "Que pena, voce nao conseguiu nem dois simbolos iguais. Tente novamente!" << endl;
+                                Sleep(500);
+                            }
+                            Sleep(2500);
+                            cout << endl;
+                        }
+                        break;
+                    case 40:
+                        srand(time(0));
+                        cout << "Voce apostou 40 reais e tera 4 jogadas." << endl;
+                        cout << endl;
+                        jogadas = 4;
+                        for (i = 0; i < jogadas; i++) {
+                            for ( j = 0; j < 5; j++) {
+                                vetorArmazenador[j] = rand() % 16;                  //gera 5 numeros aleatorios entre 0 e 15
+                                cout << megaSimbolo[vetorArmazenador[j]];      //mostra os simbolos correspondentes aos numeros gerados
+                                Sleep(300);
+                            }
+                            if (maiorRepeticao(vetorArmazenador, n) == 2) {
+                                cout << endl << "Parabens! Voce conseguiu dois simbolos iguais!" << endl;
+                                Sleep(500);
+                                cout << "Dinheiro ganho = " << Palpite * 2 << endl;
+                                cout << endl;
+                                Sleep(750);
+                                Dinheiro = Dinheiro + (Palpite * 2);
+                            } else if (maiorRepeticao(vetorArmazenador, n) == 3) {
+                                cout << endl << "Incrivel! Voce conseguiu tres simbolos iguais!" << endl;
+                                Sleep(500);
+                                cout << "Dinheiro ganho = " << Palpite * 3 << endl;
+                                cout << endl;
+                                Sleep(750);
+                                Dinheiro = Dinheiro + (Palpite * 3);
+                            } else if (maiorRepeticao(vetorArmazenador, n) == 4) {
+                                cout << endl << "Que grande sorte! Voce conseguiu quatro ou cinco simbolos iguais!" << endl;
+                                Sleep(500);
+                                cout << "Dinheiro ganho = " << Palpite * 4 << endl;
+                                cout << endl;
+                                Sleep(750);
+                                Dinheiro = Dinheiro + (Palpite * 4);
+                            } else if (maiorRepeticao(vetorArmazenador, n) == 5) {
+                                cout << endl << "FENOMENAL!!!!! Voce conseguiu os 5 símbolos iguais!!!! Parabens pelo seu dinheiro quinplificado!!" << endl;
+                                if (Palpite == 50 && palpiteAuxiliar > 50) {
+                                    Palpite = palpiteAuxiliar;
+                                }
+                                Palpite = Palpite * 5;
+                                Sleep(500);
+                            } else {
+                                cout << endl << "Que pena, voce nao conseguiu nem dois simbolos iguais. Tente novamente!" << endl;
+                                Sleep(500);
+                            }
+                            Sleep(2500);
+                            cout << endl;
+                        }
+                        break;
+                    case 50:
+                        srand(time(0));
+                        cout << "Voce apostou 50 reais e tera 5 jogadas." << endl;
+                        cout << endl;
+                        jogadas = 5;
+                        for (i = 0; i < jogadas; i++) {
+                            for ( j = 0; j < 5; j++) {
+                                vetorArmazenador[j] = rand() % 16;                  //gera 5 numeros aleatorios entre 0 e 15
+                                cout << megaSimbolo[vetorArmazenador[j]];      //mostra os simbolos correspondentes aos numeros gerados
+                                Sleep(300);
+                            }
+                            if (maiorRepeticao(vetorArmazenador, n) == 2) {
+                                cout << endl << "Parabens! Voce conseguiu dois simbolos iguais!" << endl;
+                                Sleep(500);
+                                cout << "Dinheiro ganho = " << Palpite * 2 << endl;
+                                cout << endl;
+                                Sleep(750);
+                                Dinheiro = Dinheiro + (Palpite * 2);
+                            } else if (maiorRepeticao(vetorArmazenador, n) == 3) {
+                                cout << endl << "Incrivel! Voce conseguiu tres simbolos iguais!" << endl;
+                                Sleep(500);
+                                cout << "Dinheiro ganho = " << Palpite * 3 << endl;
+                                cout << endl;
+                                Sleep(750);
+                                Dinheiro = Dinheiro + (Palpite * 3);
+                            } else if (maiorRepeticao(vetorArmazenador, n) == 4) {
+                                cout << endl << "Que grande sorte! Voce conseguiu quatro ou cinco simbolos iguais!" << endl;
+                                Sleep(500);
+                                cout << "Dinheiro ganho = " << Palpite * 4 << endl;
+                                cout << endl;
+                                Sleep(750);
+                                Dinheiro = Dinheiro + (Palpite * 4);
+                            } else if (maiorRepeticao(vetorArmazenador, n) == 5) {
+                                cout << endl << "FENOMENAL!!!!! Voce conseguiu os 5 símbolos iguais!!!! Parabens pelo seu dinheiro quinplificado!!" << endl;
+                                if (Palpite == 50 && palpiteAuxiliar > 50) {
+                                    Palpite = palpiteAuxiliar;
+                                }
+                                Palpite = Palpite * 5;
+                                Sleep(500);
+                            } else {
+                                cout << endl << "Que pena, voce nao conseguiu nem dois simbolos iguais. Tente novamente!" << endl;
+                                Sleep(500);
+                            }
+                            Sleep(2500);
+                            cout << endl;
+                        }
+                        break;
+                    default:
+                        cout << "Valor de aposta invalido. Tente novamente." << endl;
+                        break;
+                }   
+            } while (apostaValor!=0);
+        break;
 
         case 7: 
             if (Dinheiro<50) {
