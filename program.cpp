@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <vector>
+#include <ctime>
 #include <cstdlib>
 #include <unordered_map>
 #include <string>                                         //sem uso grande por enquanto
@@ -10,6 +11,22 @@
 using namespace std;
 
 const int Linhas = 4; const int Colunas = 8;            //variáveis para o void
+
+string mensagemMotivacional() {
+    srand(time(0));
+    string mensagens[] = {
+        "Acredite em voce mesmo!",
+        "Nunca desista dos seus sonhos.",
+        "O sucesso vem para quem trabalha duro.",
+        "Cada dia e uma nova oportunidade.",
+        "Mantenha a calma e continue em frente.",
+        "Na proxima voce consegue, eu sei disso!",
+        "Continue! Uma hora voce consegue!"
+    };
+    int tamanho = sizeof(mensagens) / sizeof(mensagens[0]);
+    int indice = rand() % tamanho;  // escolhe um índice aleatório
+    return mensagens[indice];
+}
 
 int maiorRepeticao(const int vetorArmazenador[], int tamanho) {               // vetorArmazenador é um parâmetro por valor e o tamanho é um parâmetro por referência!!
     unordered_map<int, int> contagem;  // dicionário valor -> quantidade
@@ -46,8 +63,8 @@ int main() {
     int vetorArmazenador[5] = { 0 }, n = sizeof(vetorArmazenador) / sizeof(vetorArmazenador[0]);
     char Nome[30], s[3], R[3], atirarArmar, Resposta[3]; //vetor tipo Char para colocar seu nome, vetor para armazenar símbolos, vetor para armazenar resposta,
     float Dinheiro, apostaValor; //variável que representa o dinheiro inicial do jogador
-    bool Condicionador = false, vencedorCorrida = false;   //pra aplicar uma condição de verdade ou falso  
-    OP=0; Dinheiro=100; Contador=0;
+    bool Condicionador = false, vencedorCorrida = false;   //pra aplicar uma condição de verdade ou falso
+    string motivacao = mensagemMotivacional();  
     char megaSimbolo[16] = {'@','#','$','&','*','%','/','?','!','<','>','|','-','=','_'};   //vetor gigante para mais simbolos da nova slot machine!
     vector<char> Simbolos = {'@','#','$','&','*','%','/','?','!'};                //vetor tipo char para armazenar símbolos (slot machine)
     bool revolver[6] = {false, false, false, false, false, false};                         //vetor tipo bool armazenando false em todas as posições
@@ -58,6 +75,7 @@ int main() {
         {false, false, false, false, false, false, false, false}                         // uma opção menos verbosa seria *bool corridaCavalo[4][8] = { false };*
     };
 
+    OP=0; Dinheiro=100; Contador=0;
     cout << "Antes de jogar, por favor digite seu nome: ";
     cin.getline(Nome, 30);
     Sleep(1000);
@@ -234,6 +252,7 @@ int main() {
                             Dinheiro = Dinheiro + (apostaValor + (apostaValor * 0.5));
                         } else {                                       //se nem um for igual
                             cout << "Que ma sorte! Parece que voce nao conseguiu nem um simbolo igual se quer. Na proxima com certeza voce consegue!" << endl;
+                            printf("%s\n", motivacao);
                             Sleep(500);
                         }
                     }                                                      //terminação do primeiro "for"
@@ -279,6 +298,7 @@ int main() {
                         }
                         if (Condicionador==false) {                                       //se nem um for igual
                             cout << "Que ma sorte! Parece que voce nao conseguiu nem um simbolo igual se quer. Na proxima com certeza voce consegue!" << endl;
+                            printf("%s\n", motivacao);
                             Sleep(500);
                         }
                         if (i==0) {                                                     //pergunta para não começar instantaneamente a segunda tentativa
@@ -329,6 +349,7 @@ int main() {
                         }
                         if (Condicionador==false) {                                       //se nem um for igual
                             cout << "Que ma sorte! Parece que voce nao conseguiu nem um simbolo igual se quer. Na proxima com certeza voce consegue!" << endl;
+                            printf("%s\n", motivacao);
                             Sleep(500);
                         }
                         if (i==1 || i==0) {                                                     //pergunta para não começar instantaneamente a segunda/terceira tentativa
@@ -389,6 +410,7 @@ int main() {
                         }
                         if (Condicionador==false) {                                       //se nem um for igual
                             cout << "Que ma sorte! Parece que voce nao conseguiu nem um simbolo igual se quer. Na proxima com certeza voce consegue!" << endl;
+                            printf("%s\n", motivacao);
                             Sleep(500);
                         }
                         if (i==2 || i==1 || i==0) {                                               //pergunta para não começar instantaneamente a segunda/terceira/quara tentativa
@@ -440,6 +462,7 @@ int main() {
                             Dinheiro = Dinheiro + (apostaValor + (apostaValor * 0.5));
                         } else if (Condicionador==false) {                                       //se nem um for igual
                             cout << "Que ma sorte! Parece que voce nao conseguiu nem um simbolo igual se quer. Na proxima com certeza voce consegue!" << endl;
+                            printf("%s\n", motivacao);
                             Sleep(800);
                         }
                         if (i==3 || i==2 ||i==1 || i==0) {                                                     //pergunta para não começar instantaneamente a próxima tentativa
@@ -551,6 +574,7 @@ int main() {
                 Sleep(500);                     
             } else {
                 cout << "Bom, nao da para esperar que va ganhar todas ne?" << endl;
+                printf("%s\n", motivacao);
                 Sleep(500);
             }
             break;                                                                   //final case 3
@@ -982,7 +1006,7 @@ int main() {
                             cout << "Coloquei a bala aleatoriamente e girei o tambor." << endl;
                             Sleep(1000);
                         } else {
-                            cout << "Meu cu chegou a passar nem wi-fi kkkkkk" << endl;
+                            cout << "Que coisa cara! Voce e um sortudo cacete!" << endl;
                             Sleep(500);
                         }
                     }
@@ -990,6 +1014,7 @@ int main() {
                     if (VidaUsuario==0) {
                         cout << "Que pena, voce morreu seu but, perdeste 25 reais" << endl;
                         Dinheiro = Dinheiro - 25;                                        //se o jogador perde
+                        printf("Brincadeira kkkk %s\n", motivacao);
                         Sleep(500);
                     } else if (VidaBot==0) {
                         cout << "Droga! Perdi para um palerma como voce. Parabens, voce triplicou seu valor de entrada" << endl;
