@@ -1,9 +1,9 @@
 #include <iostream>
+#include <stdio.h>
+#include <stdlib.h>
 #include <time.h>
 #include <vector>
 #include <cstdlib>
-#include <stdio.h>
-#include <stdlib.h>
 #include <unordered_map>
 #include <string>                                         //sem uso grande por enquanto
 #include <windows.h>                                       //para ter a função Sleep()
@@ -11,7 +11,7 @@ using namespace std;
 
 const int Linhas = 4; const int Colunas = 8;            //variáveis para o void
 
-int maiorRepeticao(const int vetorArmazenador[], int tamanho) {
+int maiorRepeticao(const int vetorArmazenador[], int tamanho) {               // vetorArmazenador é um parâmetro por valor e o tamanho é um parâmetro por referência!!
     unordered_map<int, int> contagem;  // dicionário valor -> quantidade
     int maxRep = 0;
 
@@ -48,7 +48,7 @@ int main() {
     float Dinheiro, apostaValor; //variável que representa o dinheiro inicial do jogador
     bool Condicionador = false, vencedorCorrida = false;   //pra aplicar uma condição de verdade ou falso  
     OP=0; Dinheiro=100; Contador=0;
-    char megaSimbolo[165] = {'@','#','$','&','*','%','/','?','!','<','>','|','=','-', '_'};   //vetor gigante para mais simbolos da nova slot machine!
+    char megaSimbolo[16] = {'@','#','$','&','*','%','/','?','!','<','>','|','-','=','_'};   //vetor gigante para mais simbolos da nova slot machine!
     vector<char> Simbolos = {'@','#','$','&','*','%','/','?','!'};                //vetor tipo char para armazenar símbolos (slot machine)
     bool revolver[6] = {false, false, false, false, false, false};                         //vetor tipo bool armazenando false em todas as posições
     bool corridaCavalo[4][8] = {
@@ -61,7 +61,7 @@ int main() {
     cout << "Antes de jogar, por favor digite seu nome: ";
     cin.getline(Nome, 30);
     Sleep(1000);
-    if (strcmp(Nome, "adm.Engel09") == 0) {
+    if (strcmp(Nome, "adm.Rafael09") == 0) {
         cout << "Seja bem vindo chefe!" << endl;
         Dinheiro = 999000;
     } else {
@@ -72,14 +72,14 @@ int main() {
     do {                                                                                       //Menu Principal
        cout << endl; 
        cout << "========= Diversao Virtual =========" << endl;  
-       cout << "1. MegaSena (RS20 de entreda)" << endl;                          //MegaSena de 1 a 60 
-       cout << "2. Alavanca da Sorte (RS10 de entrada)" << endl;                  //Slot Machine 
-       cout << "3. Corrida de Cavalo (RS15 de entrada)" << endl;                   //Corrida de Cavalos, você aposta no que achar ser o que vai chegar em primeiro
-       cout << "4. Jogo da Adivinhacao (RS20 de entrada)" << endl;                  //Autoexplicativo
-       cout << "5. EM PROGRESSO!!!! " << endl;
-       cout << "6. Alavanca do Milhão (RS20 de entrada)" << endl;
-       cout << "7. Roleta Russa (RS50 para jogar)" << endl;                                //Roleta Russa com chance de triplicar o valor de entrada
-       cout << "8. Sair" << endl;  
+        cout << "1. MegaSena (RS20 de entreda)" << endl;                          //MegaSena de 1 a 60 
+        cout << "2. Alavanca da Sorte (RS10 de entrada)" << endl;                  //Slot Machine 
+        cout << "3. Corrida de Cavalo (RS15 de entrada)" << endl;                   //Corrida de Cavalos, você aposta no que achar ser o que vai chegar em primeiro
+        cout << "4. Jogo da Adivinhacao (RS20 de entrada)" << endl;                  //Autoexplicativo
+        cout << "5. EM PROGRESSO!!!! " << endl;
+        cout << "6. Alavanca do Milhão (RS20 de entrada)" << endl;
+        cout << "7. Roleta Russa (RS50 para jogar)" << endl;                                //Roleta Russa com chance de triplicar o valor de entrada
+        cout << "8. Sair" << endl;
        if (Contador==0) {
         cout << "Voce apostou nenhuma vez." << endl; 
        } else if (Contador!=0) {
@@ -998,8 +998,8 @@ int main() {
                     }
                 }
             }
-        Contador = Contador + 1;
-        cout << endl;
+            Contador = Contador + 1;
+            cout << endl;
         break;                  //final case 7
        
        default:
@@ -1022,4 +1022,3 @@ int main() {
     return 0;
 }        //int main() fecha-chave
 
-// Mais nada para baixo, apenas... o vazio..., o vazio é tão... aconchegante...
